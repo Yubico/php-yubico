@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.5.4" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+  <name>Auth_Yubico</name>
+  <channel>pear.php.net</channel>
+  <summary>Authentication class for verifying Yubico OTP tokens.</summary>
+  <description>PHP class to help you verify Yubico OTP tokens.
+  </description>
+  <lead>
+    <name>Simon Josefsson</name>
+    <user>jas</user>
+    <email>simon@yubico.com</email>
+    <active>yes</active>
+  </lead>
+  <date>2008-01-24</date>
+  <time>14:50:42</time>
+  <version>
+    <release>1.1</release>
+    <api>1.0</api>
+  </version>
+  <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+  </stability>
+  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD</license>
+  <notes>This is the first release.
+  </notes>
+  <contents>
+    <dir name="/">
+      <file baseinstalldir="Auth" name="Yubico.php" role="php" />
+    </dir> <!-- / -->
+  </contents>
+  <dependencies>
+    <required>
+      <php>
+	<min>4.0.0</min>
+      </php>
+      <pearinstaller>
+	<min>1.4.0b1</min>
+      </pearinstaller>
+    </required>
+  </dependencies>
+  <phprelease />
+</package>
