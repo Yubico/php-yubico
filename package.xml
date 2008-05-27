@@ -14,10 +14,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <email>simon@yubico.com</email>
     <active>yes</active>
   </lead>
-  <date>2008-01-24</date>
+  <date>2008-05-27</date>
   <time>14:50:42</time>
   <version>
-    <release>1.1</release>
+    <release>1.2</release>
     <api>1.0</api>
   </version>
   <stability>

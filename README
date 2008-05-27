@@ -25,8 +25,8 @@ Installation
 Make sure your PHP installation supports curl, and that you have
 installed PEAR.  Install the component by invoking:
 
-  wget http://www.yubico.com/files/Auth_Yubico-1.1.tgz
-  pear install Auth_Yubico-1.1.tgz
+  wget http://www.yubico.com/files/Auth_Yubico-1.2.tgz
+  pear install Auth_Yubico-1.2.tgz
 
 Example usage
 -------------
