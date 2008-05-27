@@ -35,6 +35,7 @@ The class is easy to use, in an HTML *.php file you invoke it as
 follows:
 
  <?php
+ require_once 'Auth/Yubico.php';
  $otp = "ccbbddeertkrctjkkcglfndnlihhnvekchkcctif";
 
  $yubi = &new Auth_Yubico('42'); # 42 is your id
