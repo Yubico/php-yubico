@@ -47,6 +47,7 @@ require_once 'PEAR.php';
  *
  * Simple example:
  * <code>
+ * require_once 'Auth/Yubico.php';
  * $yubi = &new Auth_Yubico('42');
  * $auth = $yubi->verify("ccbbddeertkrctjkkcglfndnlihhnvekchkcctif");
  * if (PEAR::isError($auth)) {
