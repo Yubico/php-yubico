@@ -93,7 +93,7 @@ class Auth_Yubico
 	function Auth_Yubico($id, $key = '')
 	{
 		$this->_id =  $id;
-		$this->_key = $key;
+		$this->_key = base64_decode($key);
 	}
 
 	/**
@@ -118,27 +118,45 @@ class Auth_Yubico
 	 */
 	function verify($token)
 	{
-		/* TODO: Generate signature here. */
-
-		/* TODO: Support https. */
-
-		$url = "http://api.yubico.com/wsapi/verify?id=" .
-			$this->_id . "&otp=" . $token;
+		$parameters = "id=" . $this->_id . "&otp=" . $token;
+		/* Generate signature. */
+		if($this->_key <> "") {
+			$signature = base64_encode(hash_hmac('sha1', $parameters, $this->_key, true));
+			$parameters .= '&h=' . $signature;
+		}
+		/* Support https. */
+		$url = "https://api.yubico.com/wsapi/verify?" . $parameters;
 
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$this->_response = curl_exec($ch);
 		curl_close($ch);
-
-		/* TODO: Verify signature here. */
-
+		
 		if(!preg_match("/status=([a-zA-Z0-9_]+)/", $this->_response, $out)) {
 			return PEAR::raiseError('Could not parse response');
 		}
 
 		$status = $out[1];
+		
+		/* Verify signature. */
+		if($this->_key <> "") {
+			$rows = split("\r\n", $this->_response);
+			while (list($key, $val) = each($rows)) {
+				// = is also used in BASE64 encoding so we only replace the first = by # which is not used in BASE64
+				$val = preg_replace('/=/', '#', $val, 1);
+				$row = split("#", $val);
+				$response[$row[0]] = $row[1];
+			}
 
+			$check = 'status=' . $response[status] . '&t='. $response[t];
+			$checksignature = base64_encode(hash_hmac('sha1', $check, $this->_key, true));
+			
+			if($response[h] != $checksignature) {
+				return PEAR::raiseError('Checked Signature failed');
+			}
+		}
+		
 		if ($status != 'OK') {
 			return PEAR::raiseError($status);
 		}
