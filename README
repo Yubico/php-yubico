@@ -1,12 +1,13 @@
-Auth_Yubico PHP class
-=====================
+#summary Installation and Use of the Yubico PHP package
+#labels Featured,Phase-Deploy
+
+= !Auth_Yubico PHP class =
 
 The Yubico authentication PHP class provides an easy way to integrate
 the Yubikey into your existing PHP-based user authentication
 infrastructure.  Installation is simple using PEAR.
 
-Status and Roadmap
-------------------
+== Status and Roadmap ==
 
 The module is working.  Several items have been identified that needs
 to be implemented before it can reach production quality.  Search for
@@ -19,21 +20,22 @@ The development community is co-ordinated via Google Code:
 The license for php-yubico is the revised BSD license.  See the file
 COPYING for more information.
 
-Installation
-------------
+== Installation ==
 
 Make sure your PHP installation supports curl, and that you have
 installed PEAR.  Install the component by invoking:
 
-  wget http://www.yubico.com/files/Auth_Yubico-1.3.tgz
+{{{
+  wget http://php-yubico.googlecode.com/files/Auth_Yubico-1.3.tgz
   pear install Auth_Yubico-1.3.tgz
+}}}
 
-Example usage
--------------
+== Example usage ==
 
 The class is easy to use, in an HTML *.php file you invoke it as
 follows:
 
+{{{
  <?php
  require_once 'Auth/Yubico.php';
  $otp = "ccbbddeertkrctjkkcglfndnlihhnvekchkcctif";
@@ -47,9 +49,9 @@ follows:
     print "<p>You are authenticated!";
  }
  ?>
+}}}
 
-Feedback
---------
+== Feedback ==
 
 If you want to discuss anything related to the Yubico PHP class,
-please contact mailto:simon@yubico.com[Simon Josefsson].
+please contact Simon Josefsson <simon@yubico.com>.
