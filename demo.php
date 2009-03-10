@@ -26,6 +26,14 @@
   <table border=1>
 
 <?php
+
+   # Warning!  Supporting user specified URLs is a bad idea if you
+   # place this script on the public Internet.  Set $ask_url to 1 on
+   # the next line to make it work, for local testing purposes only!
+
+   $ask_url = 0;
+
+   $url = $_REQUEST["url"];
    $id = $_REQUEST["id"];
    $key = $_REQUEST["key"];
    $otp = $_REQUEST["otp"];
@@ -34,13 +42,24 @@
    if (!$id || !$otp) {
      $key = "oBVbNt7IZehZGR99rvq8d6RZ1DM=";
    }
+   if (!$url) {
+     $url = "api.yubico.com/wsapi/verify";
+   }
    if (!$id) {
      $id = "1851";
    }
    if (!$otp) {
      $otp = "dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh";
    }
-?>
+
+   if ($ask_url) { ?>
+
+   <tr>
+   <td><b>URL part:</b></td>
+   <td><input type=text name=url value="<?php print $url; ?>"></td>
+   </tr>
+
+<?php } ?>
 
    <tr>
    <td><b>Client ID:</b></td>
@@ -71,9 +90,12 @@
   </form>
 
 <?php
-require 'Auth/Yubico.php';
-$yubi = &new Auth_Yubico($id, $key, $https);
-$auth = $yubi->verify($otp);
+    require_once 'Auth/Yubico.php';
+    $yubi = &new Auth_Yubico($id, $key, $https);
+    if ($ask_url) {
+      $yubi->setURLpart($url);
+    }
+    $auth = $yubi->verify($otp);
 ?>
 
   <h2>Client Query</h2>
