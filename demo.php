@@ -71,7 +71,7 @@
   </form>
 
 <?php
-require './Yubico.php';
+require 'Auth/Yubico.php';
 $yubi = &new Auth_Yubico($id, $key, $https);
 $auth = $yubi->verify($otp);
 ?>
