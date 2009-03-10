@@ -21,7 +21,7 @@
 
    <h2>Input Parameters</h2>
 
-  <form method=post>
+  <form>
 
   <table border=1>
 
@@ -29,6 +29,7 @@
    $id = $_REQUEST["id"];
    $key = $_REQUEST["key"];
    $otp = $_REQUEST["otp"];
+   $https = $_REQUEST["https"];
 
    if (!$id || !$otp) {
      $key = "oBVbNt7IZehZGR99rvq8d6RZ1DM=";
@@ -57,6 +58,11 @@
    </tr>
 
    <tr>
+   <td><b>Use HTTPS:</b></td>
+   <td><input type=checkbox name=https value=1 <?php if ($https) { print "checked"; } ?>></td>
+   </tr>
+
+   <tr>
    <td colspan=2><input type=submit></td>
    </tr>
 
@@ -66,9 +72,13 @@
 
 <?php
 require './Yubico.php';
-$yubi = &new Auth_Yubico($id, $key);
+$yubi = &new Auth_Yubico($id, $key, $https);
 $auth = $yubi->verify($otp);
 ?>
+
+  <h2>Client Query</h2>
+
+<pre><?php print $yubi->getLastQuery(); ?></pre>
 
   <h2>Server Response</h2>
 
