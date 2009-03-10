@@ -26,8 +26,8 @@ Make sure your PHP installation supports curl, and that you have
 installed PEAR.  Install the component by invoking:
 
 {{{
-  wget http://php-yubico.googlecode.com/files/Auth_Yubico-1.3.tgz
-  pear install Auth_Yubico-1.3.tgz
+  wget http://php-yubico.googlecode.com/files/Auth_Yubico-1.4.tgz
+  pear install Auth_Yubico-1.4.tgz
 }}}
 
 == Example usage ==
@@ -36,11 +36,12 @@ The class is easy to use, in an HTML *.php file you invoke it as
 follows:
 
 {{{
- <?php
+<?php
  require_once 'Auth/Yubico.php';
  $otp = "ccbbddeertkrctjkkcglfndnlihhnvekchkcctif";
 
- $yubi = &new Auth_Yubico('42'); # 42 is your id
+ # Generate a new id+key from https://api.yubico.com/get-api-key/
+ $yubi = &new Auth_Yubico('42', 'FOOBAR=');
  $auth = $yubi->verify($otp);
  if (PEAR::isError($auth)) {
     print "<p>Authentication failed: " . $auth->getMessage();
@@ -48,8 +49,19 @@ follows:
  } else {
     print "<p>You are authenticated!";
  }
- ?>
+?>
 }}}
+
+== Demo page ==
+
+Provided in the package is also a script 'demo.php' that demonstrate
+how you may use the package.  The source code is available from:
+
+http://code.google.com/p/php-yubico/source/browse/trunk/demo.php
+
+To try the page, you may access it here:
+
+http://yubico.com/demo/php-yubico.php
 
 == Feedback ==
 
