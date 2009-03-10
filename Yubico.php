@@ -77,6 +77,12 @@ class Auth_Yubico
 	var $_key;
 
 	/**
+	 * URL part of validation server
+	 * @var string
+	 */
+	var $_url;
+
+	/**
 	 * Query to server
 	 * @var string
 	 */
@@ -111,9 +117,36 @@ class Auth_Yubico
 	}
 
 	/**
+	 * Specify to use a different URL part for verification.
+	 * The default is "api.yubico.com/wsapi/verify".
+	 *
+	 * @param  string    New server URL part to use
+	 * @access public
+	 */
+	function setURLpart($url)
+	{
+		$this->_url = $url;
+	}
+
+	/**
+	 * Get URL part to use for validation.
+	 *
+	 * @return string		Server URL part
+	 * @access public
+	 */
+	function getURLpart()
+	{
+		if ($this->_url) {
+			return $this->_url;
+		} else {
+			return "api.yubico.com/wsapi/verify";
+		}
+	}
+
+	/**
 	 * Return the last query sent to the server, if any.
 	 *
-	 * @return string		Output from server.
+	 * @return string		Output from server
 	 * @access public
 	 */
 	function getLastQuery()
@@ -124,7 +157,7 @@ class Auth_Yubico
 	/**
 	 * Return the last data received from the server, if any.
 	 *
-	 * @return string		Output from server.
+	 * @return string		Output from server
 	 * @access public
 	 */
 	function getLastResponse()
@@ -153,11 +186,12 @@ class Auth_Yubico
 
 		/* Support https. */
 		if ($this->_https) {
-		  $this->_query = "https";
+		  $this->_query = "https://";
 		} else {
-		  $this->_query = "http";
+		  $this->_query = "http://";
 		}
-		$this->_query .= "://api.yubico.com/wsapi/verify?";
+		$this->_query .= $this->getURLpart();
+		$this->_query .= "?";
 		$this->_query .= $parameters;
 
 		$ch = curl_init($this->_query);
