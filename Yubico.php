@@ -89,17 +89,25 @@ class Auth_Yubico
 	var $_response;
 
 	/**
+	 * Flag whether to use https or not.
+	 * @var string
+	 */
+	var $_https;
+
+	/**
 	 * Constructor
 	 *
 	 * Sets up the object
 	 * @param    string  The client identity
 	 * @param    string  The client MAC key (optional)
+	 * @param    boolean Flag whether to use https (optional)
 	 * @access public
 	 */
-	function Auth_Yubico($id, $key = '')
+	function Auth_Yubico($id, $key = '', $https = 0)
 	{
 		$this->_id =  $id;
 		$this->_key = base64_decode($key);
+		$this->_https = $https;
 	}
 
 	/**
@@ -142,8 +150,14 @@ class Auth_Yubico
 			$signature = preg_replace('/\+/', '%2B', $signature);
 			$parameters .= '&h=' . $signature;
 		}
+
 		/* Support https. */
-		$this->_query = "https://api.yubico.com/wsapi/verify?" . $parameters;
+		if ($this->_https) {
+		  $this->_query = "https";
+		} else {
+		  $this->_query = "http";
+		}
+		$this->_query .= "://api.yubico.com/wsapi/verify?" . $param
 
 		$ch = curl_init($this->_query);
 		curl_setopt($ch, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
