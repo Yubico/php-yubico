@@ -47,7 +47,7 @@
    </tr>
 
    <tr>
-   <td><b>Key:</b></td>
+   <td><b>Key (base64):</b></td>
    <td><input type=text name=key size=30 value="<?php print $key; ?>"></td>
    </tr>
 
