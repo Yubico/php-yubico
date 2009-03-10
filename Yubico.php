@@ -157,7 +157,8 @@ class Auth_Yubico
 		} else {
 		  $this->_query = "http";
 		}
-		$this->_query .= "://api.yubico.com/wsapi/verify?" . $param
+		$this->_query .= "://api.yubico.com/wsapi/verify?";
+		$this->_query .= $parameters;
 
 		$ch = curl_init($this->_query);
 		curl_setopt($ch, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
