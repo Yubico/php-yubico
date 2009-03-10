@@ -56,14 +56,14 @@
 
    <tr>
    <td><b>URL part:</b></td>
-   <td><input type=text name=url value="<?php print $url; ?>"></td>
+   <td><input type=text name=url size=50 value="<?php print $url; ?>"></td>
    </tr>
 
 <?php } ?>
 
    <tr>
    <td><b>Client ID:</b></td>
-   <td><input type=text name=id value="<?php print $id; ?>"></td>
+   <td><input type=text name=id size=10 value="<?php print $id; ?>"></td>
    </tr>
 
    <tr>
