@@ -4,7 +4,7 @@
    *
    * LICENSE:
    *
-   * Copyright (c) 2007, 2008  Simon Josefsson.  All rights reserved.
+   * Copyright (c) 2007, 2008, 2009  Simon Josefsson.  All rights reserved.
    *
    * Redistribution and use in source and binary forms, with or without
    * modification, are permitted provided that the following conditions
@@ -122,6 +122,7 @@ class Auth_Yubico
 		/* Generate signature. */
 		if($this->_key <> "") {
 			$signature = base64_encode(hash_hmac('sha1', $parameters, $this->_key, true));
+			$signature = preg_replace('/\+/', '%2B', $signature);
 			$parameters .= '&h=' . $signature;
 		}
 		/* Support https. */
