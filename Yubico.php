@@ -77,6 +77,12 @@ class Auth_Yubico
 	var $_key;
 
 	/**
+	 * Query to server
+	 * @var string
+	 */
+	var $_query;
+
+	/**
 	 * Response from server
 	 * @var string
 	 */
@@ -94,6 +100,17 @@ class Auth_Yubico
 	{
 		$this->_id =  $id;
 		$this->_key = base64_decode($key);
+	}
+
+	/**
+	 * Return the last query sent to the server, if any.
+	 *
+	 * @return string		Output from server.
+	 * @access public
+	 */
+	function getLastQuery()
+	{
+		return $this->_query;
 	}
 
 	/**
@@ -126,9 +143,9 @@ class Auth_Yubico
 			$parameters .= '&h=' . $signature;
 		}
 		/* Support https. */
-		$url = "https://api.yubico.com/wsapi/verify?" . $parameters;
+		$this->_query = "https://api.yubico.com/wsapi/verify?" . $parameters;
 
-		$ch = curl_init($url);
+		$ch = curl_init($this->_query);
 		curl_setopt($ch, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$this->_response = curl_exec($ch);
@@ -152,7 +169,6 @@ class Auth_Yubico
 
 			$check = 'status=' . $response[status] . '&t='. $response[t];
 			$checksignature = base64_encode(hash_hmac('sha1', $check, $this->_key, true));
-			
 			if($response[h] != $checksignature) {
 				return PEAR::raiseError('Checked Signature failed');
 			}
