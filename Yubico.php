@@ -197,6 +197,7 @@ class Auth_Yubico
 		$ch = curl_init($this->_query);
 		curl_setopt($ch, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		$this->_response = curl_exec($ch);
 		curl_close($ch);
 		

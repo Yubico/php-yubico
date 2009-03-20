@@ -31,7 +31,7 @@
    # place this script on the public Internet.  Set $ask_url to 1 on
    # the next line to make it work, for local testing purposes only!
 
-   $ask_url = 0;
+   $ask_url = 1;
 
    $url = $_REQUEST["url"];
    $id = $_REQUEST["id"];
