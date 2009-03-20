@@ -53,4 +53,6 @@ release:
 	 https://php-yubico.googlecode.com/svn/tags/$(PACKAGE)-$(VERSION) \
 	 -m "Tagging the $(VERSION) release of the $(PACKAGE) project."
 	googlecode_upload.py -s "Auth_Yubico $(VERSION)." \
-	 -p php-yubico -u simon75j $(PACKAGE)-$(VERSION).tar.gz 
+	 -p php-yubico -u simon75j $(PACKAGE)-$(VERSION).tgz 
+	googlecode_upload.py -s "OpenPGP signature for Auth_Yubico $(VERSION)." \
+	 -p php-yubico -u simon75j $(PACKAGE)-$(VERSION).tgz.sig
