@@ -21,7 +21,7 @@ if ($authenticated == 0) {
 
 		<h1 class="ok">Congratulations <?php if ($realname) { print "$realname!"; }?></h1>
 		You have successfully set the username/password to use with the Demo server.
-		<p>» <a href="index.php">Continue to main page&gt;&gt;</a>
+		<p>» <a href="./">Continue to main page&gt;&gt;</a>
 <?php } else { ?>
 
 <b>Set username and password for Yubico Demo server</b><br>
