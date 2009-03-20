@@ -26,8 +26,8 @@ Make sure your PHP installation supports curl, and that you have
 installed PEAR.  Install the component by invoking:
 
 {{{
-  wget http://php-yubico.googlecode.com/files/Auth_Yubico-1.4.tgz
-  pear install Auth_Yubico-1.4.tgz
+  wget http://php-yubico.googlecode.com/files/Auth_Yubico-1.5.tgz
+  pear install Auth_Yubico-1.5.tgz
 }}}
 
 == Example usage ==
@@ -61,7 +61,18 @@ http://code.google.com/p/php-yubico/source/browse/trunk/demo.php
 
 To try the page, you may access it here:
 
-http://yubico.com/demo/php-yubico.php
+http://www.yubico.com/demo/php-yubico.php
+
+There is also a complete example site to demo one-factor and
+two-factor mode.  It requires a database to store the username and
+passwords.  Database schema is in example/db.sql and configuration for
+the database needs to go into example/config.php.
+
+http://code.google.com/p/php-yubico/source/browse/trunk/example/
+
+To try the page, you may access it here:
+
+http://www.yubico.com/demo/
 
 == Feedback ==
 
