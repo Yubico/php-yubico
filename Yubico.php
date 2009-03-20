@@ -34,10 +34,10 @@
    * @category    Auth
    * @package     Auth_Yubico
    * @author      Simon Josefsson <simon@yubico.com>
-   * @copyright   2008 Simon Josefsson
+   * @copyright   2009 Simon Josefsson
    * @license     http://opensource.org/licenses/bsd-license.php New BSD License
-   * @version     CVS: $Id: Yubico.php,v 1.7 2007-10-22 12:56:14 jas Exp $
-   * @link        http://yubico.com/
+   * @version     1.6
+   * @link        http://www.yubico.com/
    */
 
 require_once 'PEAR.php';
@@ -48,8 +48,11 @@ require_once 'PEAR.php';
  * Simple example:
  * <code>
  * require_once 'Auth/Yubico.php';
- * $yubi = &new Auth_Yubico('42');
- * $auth = $yubi->verify("ccbbddeertkrctjkkcglfndnlihhnvekchkcctif");
+ * $otp = "ccbbddeertkrctjkkcglfndnlihhnvekchkcctif";
+ *
+ * # Generate a new id+key from https://api.yubico.com/get-api-key/
+ * $yubi = &new Auth_Yubico('42', 'FOOBAR=');
+ * $auth = $yubi->verify($otp);
  * if (PEAR::isError($auth)) {
  *    print "<p>Authentication failed: " . $auth->getMessage();
  *    print "<p>Debug output from server: " . $yubi->getLastResponse();
