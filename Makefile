@@ -25,9 +25,13 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-VERSION=1.4
+VERSION=1.5
 PACKAGE=Auth_Yubico
-FILES=Yubico.php package.xml README
+FILES=Yubico.php package.xml README demo.php example/admin.php		\
+	example/authenticate.php example/config.php example/db.sql	\
+	example/debug.php example/img_press.jpg example/index.html	\
+	example/logo.jpg example/one_factor.php example/style.css	\
+	example/two_factor_legacy.php example/two_factor.php
 
 all: $(PACKAGE)-$(VERSION).tgz
 
