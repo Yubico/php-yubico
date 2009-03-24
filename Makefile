@@ -45,14 +45,16 @@ clean:
 	rm -f *~
 	rm -rf $(PACKAGE)-$(VERSION)
 
+PROJECT=php-yubico
+
 release:
 	make
 	gpg -b $(PACKAGE)-$(VERSION).tgz
 	gpg --verify $(PACKAGE)-$(VERSION).tgz.sig
-	svn copy https://php-yubico.googlecode.com/svn/trunk/ \
-	 https://php-yubico.googlecode.com/svn/tags/$(PACKAGE)-$(VERSION) \
+	svn copy https://$(PROJECT).googlecode.com/svn/trunk/ \
+	 https://$(PROJECT).googlecode.com/svn/tags/$(PACKAGE)-$(VERSION) \
 	 -m "Tagging the $(VERSION) release of the $(PACKAGE) project."
+	googlecode_upload.py -s "OpenPGP signature for $(PACKAGE) $(VERSION)." \
+	 -p $(PROJECT) -u simon75j $(PACKAGE)-$(VERSION).tgz.sig
 	googlecode_upload.py -s "Auth_Yubico $(VERSION)." \
-	 -p php-yubico -u simon75j $(PACKAGE)-$(VERSION).tgz 
-	googlecode_upload.py -s "OpenPGP signature for Auth_Yubico $(VERSION)." \
-	 -p php-yubico -u simon75j $(PACKAGE)-$(VERSION).tgz.sig
+	 -p $(PROJECT) -u simon75j $(PACKAGE)-$(VERSION).tgz 
