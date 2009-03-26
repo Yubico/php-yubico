@@ -25,7 +25,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-VERSION=1.6
+VERSION=1.7
 PACKAGE=Auth_Yubico
 FILES=Yubico.php package.xml README demo.php example/admin.php		\
 	example/authenticate.php example/config.php example/db.sql	\
@@ -33,13 +33,28 @@ FILES=Yubico.php package.xml README demo.php example/admin.php		\
 	example/logo.jpg example/one_factor.php example/style.css	\
 	example/two_factor_legacy.php example/two_factor.php
 
-all: $(PACKAGE)-$(VERSION).tgz
+all: sync-version $(PACKAGE)-$(VERSION).tgz
 
 $(PACKAGE)-$(VERSION).tgz: $(FILES)
 	mkdir $(PACKAGE)-$(VERSION)
 	cp $(FILES) $(PACKAGE)-$(VERSION)
 	tar cfz $(PACKAGE)-$(VERSION).tgz $(PACKAGE)-$(VERSION)
 	rm -rf $(PACKAGE)-$(VERSION)
+
+.PHONY: sync-version
+sync-version:
+	cat package.xml | perl -p -e "s,<release>[0-9.]+</release>,<release>"$(VERSION)"</release>," > tmp && \
+	if ! cmp package.xml tmp; then \
+		mv tmp package.xml; \
+	else \
+		rm tmp; \
+	fi
+	cat README | perl -p -e "s,Auth_Yubico-[0-9.]+.tgz,Auth_Yubico-"$(VERSION)".tgz," > tmp && \
+	if ! cmp README tmp; then \
+		mv tmp README; \
+	else \
+		rm tmp; \
+	fi
 
 clean:
 	rm -f *~
