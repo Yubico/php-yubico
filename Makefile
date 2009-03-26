@@ -73,3 +73,6 @@ release:
 	 -p $(PROJECT) -u simon75j $(PACKAGE)-$(VERSION).tgz.sig
 	googlecode_upload.py -s "Auth_Yubico $(VERSION)." \
 	 -p $(PROJECT) -u simon75j $(PACKAGE)-$(VERSION).tgz 
+	cp README ../wiki-$(PROJECT)/ReadMe.wiki && \
+		cd ../wiki-$(PROJECT) && \
+		svn commit -m Sync. ReadMe.wiki
