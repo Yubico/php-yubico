@@ -35,7 +35,7 @@ if ($authenticated == 0) { ?>
 					<b>YubiKey</b>
 			</td>
 			<td>
-				  <input autocomplete="off" type="password" name="key">
+				  <input autocomplete="off" type="text" name="key">
 			</td>
 		</tr>
 	</table>
