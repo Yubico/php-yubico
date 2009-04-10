@@ -203,7 +203,12 @@ class Auth_Yubico
 	 */
 	function verify($token)
 	{
-		$parameters = "id=" . $this->_id . "&otp=" . $token;
+		$ret = $this->parsePasswordOTP($token);
+		if (!$ret) {
+			return PEAR::raiseError('Could not parse Yubikey OTP');
+		}
+
+		$parameters = "id=" . $this->_id . "&otp=" . $ret['otp'];
 		/* Generate signature. */
 		if($this->_key <> "") {
 			$signature = base64_encode(hash_hmac('sha1', $parameters, $this->_key, true));
