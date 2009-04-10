@@ -11,10 +11,11 @@
 	    print "one-factor";
 	}
 	print "</td></tr>\n";
-	!$key or
-	 print "<tr><td width=70><b>key</b></td><td>$key</td></tr>\n";
-	!$passwordkey or
-	 print "<tr><td width=70><b>passwordkey</b></td><td>$passwordkey</td></tr>\n";
+	if ($passwordkey) {
+	    print "<tr><td width=70><b>passwordkey</b></td><td>$passwordkey</td></tr>\n";
+	} else if ($key) {
+	    print "<tr><td width=70><b>key</b></td><td>$key</td></tr>\n";
+	}
 	!$username or
 	 print "<tr><td width=70><b>username</b></td><td>$username</td></tr>\n";
 	!$password or
