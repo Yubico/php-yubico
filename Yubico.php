@@ -168,6 +168,30 @@ class Auth_Yubico
 		return $this->_response;
 	}
 
+	/**
+	 * Parse input string into password, yubikey prefix,
+	 * ciphertext, and OTP.
+	 *
+	 * @param  string    Input string to parse
+	 * @param  string    Optional delimiter re-class, default is '[:]'
+	 * @return array     Keyed array with fields
+	 * @access public
+	 */
+	function parsePasswordOTP($str, $delim = '[:]')
+	{
+		if (!preg_match("/^((.*)" . $delim . ")?" .
+				"(([cbdefghijklnrtuv]{0,16})" .
+				"([cbdefghijklnrtuv]{32}))$/",
+				$str, $matches)) {
+			return false;
+		}
+		$ret['password'] = $matches[2];
+		$ret['otp'] = $matches[3];
+		$ret['prefix'] = $matches[4];
+		$ret['ciphertext'] = $matches[5];
+		return $ret;
+	}
+
 	/* TODO? Add functions to get parsed parts of server response? */
 
 	/**
