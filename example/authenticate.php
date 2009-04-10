@@ -7,8 +7,6 @@ $password = $_REQUEST["password"];
 $mode = $_REQUEST["mode"];
 $key = $_REQUEST["key"];
 $passwordkey = $_REQUEST["passwordkey"];
-$token_size = 32;
-$identity_size = 12;
 
 # Quit early on no input
 if (!$key && !$passwordkey) {
@@ -18,21 +16,18 @@ if (!$key && !$passwordkey) {
 
 # Convert passwordkey fields into password + key variables
 if ($passwordkey) {
-  # Password + key case
-  if (strlen ($passwordkey) <= $token_size + $identity_size) {
-    $authenticated = 31;
-    return;
-  }
+  $ret = Auth_Yubico::parsePasswordOTP($passwordkey);
+} else {
+  $ret = Auth_Yubico::parsePasswordOTP($key);
+}
 
-  $loginkey = substr ($passwordkey, -$token_size);
-  $identity = substr ($passwordkey, -$token_size - $identity_size, - $token_size);
-  $password = substr ($passwordkey, 0, - $token_size - $identity_size);
-  $key = $identity . $loginkey;
- } else if ($mode == "admin") {
-  $identity = substr ($key, 0, -$token_size);
- } else {
-  $identity = substr ($key, -$token_size - $identity_size, - $token_size);
- }
+if (!$ret) {
+  $authenticated = 31;
+  return;
+}
+
+$identity = $ret['prefix'];
+$key = $ret['otp'];
 
 # Check OTP
 $yubi = &new Auth_Yubico($CFG[__CLIENT_ID__], $CFG[__CLIENT_KEY__]);
@@ -77,7 +72,7 @@ if ($passwordkey) {
     }
   }
 
-  if ($db_password == $password) {
+  if ($db_password == $ret['password']) {
     $authenticated = 0;
   } else {
     $authenticated = 4;

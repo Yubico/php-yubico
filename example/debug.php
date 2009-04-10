@@ -23,7 +23,11 @@
 	!$identity or
 	 print "<tr><td width=70><b>identity</b></td><td>$identity</td></tr>\n";
 	!$realname or
-	 print "<tr><td width=70><b>realname</b></td><td>$realname</td></tr>\n";
+	 print "<tr><td width=70><b>db_realname</b></td><td>$realname</td></tr>\n";
+	!$db_password or
+	 print "<tr><td width=70><b>db_password</b></td><td>$db_password</td></tr>\n";
+	!$authenticated or
+	 print "<tr><td width=70><b>rc</b></td><td>$authenticated</td></tr>\n";
 	print "<tr><td colspan=2>&nbsp;</td></tr>\n";
 	print "<tr><td colspan=2><b>Authentication Output</b></td></tr>\n";
 	if ($yubi) {

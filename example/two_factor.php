@@ -19,7 +19,7 @@ if ($authenticated == 0) { ?>
 	<b>Two factor: Password + YubiKey</b><br />
 	<ol>
 	<li>Place your YubiKey in the USB-port.</li>
-	<li>Enter password.  Don't press enter or tab after
+	<li>Enter password followed by a colon ":".  Don't press enter or tab after
 	  the password.</li>
 	<li>Put your finger on the YubiKey button and hold it
 	  steady until the YubiKey field is filled.</li>
