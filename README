@@ -9,16 +9,13 @@ infrastructure.  Installation is simple using PEAR.
 
 == Status and Roadmap ==
 
-The module is working.  Several items have been identified that needs
-to be implemented before it can reach production quality.  Search for
-TODO in Yubico.php.
+The module is stable and is used in production.
 
 The development community is co-ordinated via Google Code:
 
   http://code.google.com/p/php-yubico/
 
-The license for php-yubico is the revised BSD license.  See the file
-COPYING for more information.
+The license for php-yubico is the revised BSD license.
 
 == Installation ==
 
@@ -61,7 +58,7 @@ http://code.google.com/p/php-yubico/source/browse/trunk/demo.php
 
 To try the page, you may access it here:
 
-http://www.yubico.com/demo/php-yubico.php
+http://www.yubico.com/demo/demo.php
 
 There is also a complete example site to demo one-factor and
 two-factor mode.  It requires a database to store the username and
