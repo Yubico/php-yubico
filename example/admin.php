@@ -11,6 +11,10 @@
   <img src="logo.jpg" alt="" /><br /><br />
 
 <?php include 'authenticate.php';
+if (preg_match("<[^a-zA-Z0-9_!%&/()=-]>", $password) ||
+    preg_match("<[^a-zA-Z0-9_!%&/()=-]>", $username)) {
+  $authenticated = 100;
+}
 if ($authenticated == 0) {
 
   $query  = sprintf ("DELETE FROM demoserver WHERE id='%s'",
