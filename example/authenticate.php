@@ -52,7 +52,8 @@ if ($mode == "admin") {
   return;
  }
 
-$query  = "SELECT username FROM demoserver WHERE id='$identity';";
+$query  = sprintf ("SELECT username FROM demoserver WHERE id='%s'",
+		   pg_escape_string($identity));
 $result = pg_query($query);
 if ($result) {
   $row = pg_fetch_row($result);
@@ -63,7 +64,8 @@ if ($result) {
 
 # Check password (two-factor)
 if ($passwordkey) {
-  $query  = "SELECT password FROM demoserver WHERE id='$identity';";
+  $query  = sprintf ("SELECT password FROM demoserver WHERE id='%s'",
+		     pg_escape_string($identity));
   $result = pg_query($query);
   if ($result) {
     $row = pg_fetch_row($result);

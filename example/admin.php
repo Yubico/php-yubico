@@ -13,9 +13,13 @@
 <?php include 'authenticate.php';
 if ($authenticated == 0) {
 
-  $query  = "DELETE FROM demoserver WHERE id='$identity'";
+  $query  = sprintf ("DELETE FROM demoserver WHERE id='%s'",
+		     pg_escape_string ($identity));
   pg_query($query) or die('Error, admin delete failed: ' . pg_error());
-  $query  = "INSERT INTO demoserver (id, username, password) values ('$identity', '$username', '$password');";
+  $query  = sprintf ("INSERT INTO demoserver (id, username, password) values ('%s', '%s', '%s')",
+		     pg_escape_string ($identity),
+		     pg_escape_string ($username),
+		     pg_escape_string ($password));
   pg_query($query) or die('Error, admin insert failed: ' . pg_error());
  ?>
 
