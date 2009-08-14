@@ -47,7 +47,7 @@ Authentication failure. Please try again. </h1><br>
 <?php } ?>
 
 
-		<form name="login" method="get" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px;">
+		<form name="login" method="post" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px;">
 		<table border="0" cellspacing="0" cellpadding="0" width="100%">
 			<tr>
 				<td width="150">	  
