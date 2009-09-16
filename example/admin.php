@@ -23,12 +23,12 @@
 	  <div id="container">
 	  
 		<div id="logoArea">
-           <img src="images/yubicoLogo.gif" alt="yubicoLogo" width="150" height="75"/>
+           <img src="yubicoLogo.gif" alt="yubicoLogo" width="150" height="75"/>
 		</div>
 		
 		<div id="greenBarContent">
 			<div id="greenBarImage">
-				<img src="images/yubikey.jpg" alt="yubikey" width="150" height="89"/>
+				<img src="yubikey.jpg" alt="yubikey" width="150" height="89"/>
 			</div>
 			<div id="greenBarText">
 				<h3>
@@ -36,12 +36,6 @@
 				</h3>
 			</div>
 		</div>
-<!--		
-<body onLoad="document.login.username.focus();">
-<div class="container">
-  <div class="top">&nbsp;</div>
-  <img src="logo.jpg" alt="" /><br /><br />
--->
 		<div id="bottomContent">
 <?php include 'authenticate.php';
 if (preg_match("<[^a-zA-Z0-9_!%&/()=-]>", $password) ||
