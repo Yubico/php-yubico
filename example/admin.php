@@ -1,15 +1,48 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>Services</title>
-	<meta http-equiv="Content-Type" content="text/html">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+	<title></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
+		
+	<style type="text/css">
+	<!--
+	-->
+	</style>
+</head>	
 </head>
+
+<body onLoad="document.login.username.focus();">
+	  
+	  <div id="stripe">
+	  &nbsp;
+	  </div>	
+	  
+	  <div id="container">
+	  
+		<div id="logoArea">
+           <img src="images/yubicoLogo.gif" alt="yubicoLogo" width="150" height="75"/>
+		</div>
+		
+		<div id="greenBarContent">
+			<div id="greenBarImage">
+				<img src="images/yubikey.jpg" alt="yubikey" width="150" height="89"/>
+			</div>
+			<div id="greenBarText">
+				<h3>
+				Set username and password for Demo server
+				</h3>
+			</div>
+		</div>
+<!--		
 <body onLoad="document.login.username.focus();">
 <div class="container">
   <div class="top">&nbsp;</div>
   <img src="logo.jpg" alt="" /><br /><br />
-
+-->
+		<div id="bottomContent">
 <?php include 'authenticate.php';
 if (preg_match("<[^a-zA-Z0-9_!%&/()=-]>", $password) ||
     preg_match("<[^a-zA-Z0-9_!%&/()=-]>", $username)) {
@@ -32,7 +65,6 @@ if ($authenticated == 0) {
 		<p>» <a href="./">Continue to main page&gt;&gt;</a>
 <?php } else { ?>
 
-<b>Set username and password for Yubico Demo server</b><br>
 	<ol>
 		<li>Place your YubiKey in the USB-port.</li>
 		<li>Enter Username and Password.</li>
@@ -42,7 +74,7 @@ if ($authenticated == 0) {
 <br>
 
 <?php if ($authenticated > 0) { ?>
-<h1 class="fail">
+<h1 class="fel">
 Authentication failure. Please try again. </h1><br>
 <?php } ?>
 
@@ -58,6 +90,9 @@ Authentication failure. Please try again. </h1><br>
 				</td>
 			</tr>
 			<tr>
+				<td colspan=2>&nbsp;</td>
+			</tr>
+			<tr>
 				<td width="150">	  
 						<b>Password</b>
 				</td>
@@ -65,6 +100,10 @@ Authentication failure. Please try again. </h1><br>
 					  <input autocomplete="off" type="password" name="password">
 				</td>
 			</tr>
+			<tr>
+				<td colspan=2>&nbsp;</td>
+			</tr>
+			
 			<tr>
 				<td width="150">
 						<b>YubiKey</b>
@@ -75,7 +114,6 @@ Authentication failure. Please try again. </h1><br>
 				</td>
 			</tr>
 		</table>
-	
 	</form>
 
 <p>» <a href="./">Back to main page</a>
