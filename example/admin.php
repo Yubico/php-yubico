@@ -56,7 +56,7 @@ if ($authenticated == 0) {
 
 		<h1 class="ok">Congratulations <?php if ($realname) { print "$realname!"; }?></h1>
 		You have successfully set the username/password to use with the Demo server.
-		<p>» <a href="./">Continue to main page&gt;&gt;</a>
+		<p>&raquo; <a href="./">Continue to main page&gt;&gt;</a>
 <?php } else { ?>
 
 	<ol>
@@ -110,7 +110,7 @@ Authentication failure. Please try again. </h1><br>
 		</table>
 	</form>
 
-<p>» <a href="./">Back to main page</a>
+<p>&raquo; <a href="./">Back to main page</a>
 
 <?php } ?>
 

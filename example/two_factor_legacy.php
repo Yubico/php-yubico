@@ -57,7 +57,7 @@ if ($authenticated == 0) { ?>
 		<h1 class="fel">Login failure. Please try again. </h1>
 <?php } ?>
 
-	<form name="login" method="get" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px;">
+	<form name="login" method="post" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px;">
 	<input type="hidden" name="mode" value="legacy">
 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
 		<tr>
