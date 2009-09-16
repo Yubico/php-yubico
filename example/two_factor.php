@@ -44,7 +44,7 @@ if ($authenticated == 0) { ?>
 <?php } else { ?>
 	<ol>
 		<li>Place your YubiKey in the USB-port.</li>
-		<li>Enter password.  Don't press enter or tab after
+		<li>Enter password <b>followed by a colon ":"</b>.  Don't press enter or tab after
 		  the password.</li>
 		<li>Put your finger on the YubiKey button and hold it
 		  steady until the YubiKey field is filled.</li>
@@ -53,7 +53,7 @@ if ($authenticated == 0) { ?>
 	<br />
 
 <?php if ($authenticated > 0) { ?>
-		<h1 class="fel">Login failure. Please try again. </h1>
+		<h1 class="fail">Login failure. Please try again. </h1>
 <?php } ?>
 
 	<form name="login" method="post" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px;">

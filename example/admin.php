@@ -68,7 +68,7 @@ if ($authenticated == 0) {
 <br>
 
 <?php if ($authenticated > 0) { ?>
-<h1 class="fel">
+<h1 class="fail">
 Authentication failure. Please try again. </h1><br>
 <?php } ?>
 

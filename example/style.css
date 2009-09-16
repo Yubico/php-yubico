@@ -116,6 +116,23 @@
 		font-size: 11px;
 		}
 		
+		#bottomContent h1 {
+  		font-family: Verdana, Arial, Tahoma;
+  		font-size: 12px;
+  		font-weight: bold;
+  		padding: 0px;
+  		margin: 0px;
+  		margin-bottom: 8px;
+		}
+
+		#bottomContent h1.fail {
+  		color: #d90000;
+		}
+
+		#bottomContent h1.ok {
+  		color: #009418;
+		}
+
 		#smallWhite{
 		font-size:11px;
 		color:#fff;

@@ -49,7 +49,7 @@ if ($authenticated == 0) { ?>
 	<br />
 
 <?php if ($authenticated > 0) { ?>
-		<h1 class="fel">Login failure. Please try again. </h1>
+		<h1 class="fail">Login failure. Please try again. </h1>
 <?php } ?>
 
 	<form name="login" method="post" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px; font-size:12px;">
@@ -59,7 +59,7 @@ if ($authenticated == 0) { ?>
 					<b>YubiKey</b>
 			</td>
 			<td>
-				  <input autocomplete="off" type="password" name="key">
+				  <input autocomplete="off" type="text" name="key">
 			</td>
 		</tr>
 	</table>
