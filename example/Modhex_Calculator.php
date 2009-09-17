@@ -87,7 +87,7 @@ if (strlen($srctext) > 0) {
 ?>
 <p><br>
 
-<form action=Modehex_Calculator.php method=post autocomplete=off>
+<form action=Modhex_Calculator.php method=post autocomplete=off>
 	<b>Source format:</b><BR>
 	<INPUT TYPE=RADIO NAME="srcfmt" VALUE="P">Plain text<BR>
 	<INPUT TYPE=RADIO NAME="srcfmt" VALUE="N">Number<BR>
