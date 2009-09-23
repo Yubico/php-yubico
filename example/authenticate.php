@@ -14,6 +14,11 @@ if (!$key && !$passwordkey) {
   return;
  }
 
+# Prepare passwordkey using password and key variables
+if (($password && $key) && !$passwordkey) {
+  $passwordkey = $password . ':' . $key;
+}
+
 # Convert passwordkey fields into password + key variables
 if ($passwordkey) {
   $ret = Auth_Yubico::parsePasswordOTP($passwordkey);

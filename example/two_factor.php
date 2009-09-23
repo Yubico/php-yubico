@@ -44,8 +44,7 @@ if ($authenticated == 0) { ?>
 <?php } else { ?>
 	<ol>
 		<li>Place your YubiKey in the USB-port.</li>
-		<li>Enter password <b>followed by a colon ":"</b>.  Don't press enter or tab after
-		  the password.</li>
+		<li>Enter password.</li>
 		<li>Put your finger on the YubiKey button and hold it
 		  steady until the YubiKey field is filled.</li>
 		</ol>
@@ -59,11 +58,22 @@ if ($authenticated == 0) { ?>
 	<form name="login" method="post" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px;">
 		<table border="0" cellspacing="0" cellpadding="0" width="100%">
 			<tr>
-				<td width="150">
-						<b>Password + YubiKey</b>
+				<td  width="150">
+					<b>Password</b>
 				</td>
 				<td width="470">
-					  <input autocomplete="off" type="password" name="passwordkey"><input type="submit" value="Go" style="border: 0px; font-size: 0px; background: none; padding: 0px; margin: 0px; width: 0px; height: 0px;" />
+				  <input autocomplete="off" type="text" name="password">
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2>&nbsp;</td>
+			</tr>
+			<tr>
+				<td width="150">
+					<b>YubiKey</b>
+				</td>
+				<td width="470">
+				  <input autocomplete="off" type="text" name="key" class="yubiKeyInput"><input type="submit" value="Go" style="border: 0px; font-size: 0px; background: none; padding: 0px; margin: 0px; width: 0px; height: 0px;" />
 				</td>
 			</tr>
 		</table>

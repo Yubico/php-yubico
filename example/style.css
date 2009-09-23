@@ -148,4 +148,11 @@
 		font-size:11px;
 		}
 		
+		/* Yubico Mice header*/
+		.yubiKeyInput{ 
+		background: white url("./yubiright_16x16.gif") no-repeat 2px 2px; 
+		padding-left: 20px; 
+		height: 18px; 
+		width: 180px; 
+		}
 		

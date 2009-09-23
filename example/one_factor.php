@@ -59,7 +59,7 @@ if ($authenticated == 0) { ?>
 					<b>YubiKey</b>
 			</td>
 			<td>
-				  <input autocomplete="off" type="text" name="key">
+				  <input autocomplete="off" type="text" name="key" class="yubiKeyInput">
 			</td>
 		</tr>
 	</table>

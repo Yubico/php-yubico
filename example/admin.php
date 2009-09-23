@@ -103,7 +103,7 @@ Authentication failure. Please try again. </h1><br>
 						<b>YubiKey</b>
 				</td>
 				<td width="470">
-					 <input autocomplete="off" type="password" name="key">
+					 <input autocomplete="off" type="password" name="key" class="yubiKeyInput">
 					 <input type="hidden" name="mode" value="admin"><input type="submit" value="Go" style="border: 0px; font-size: 0px; background: none; padding: 0px; margin: 0px; width: 0px; height: 0px;" />
 				</td>
 			</tr>

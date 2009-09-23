@@ -63,12 +63,17 @@ function b64ToModhex($b64_str) {
 	return ModHex::Encode($s);
 }
 
+function zeropad($num)
+{
+    return (strlen($num) == 1) ? '0'.$num : $num;
+}
+
 function b64ToHex($b64_str) {
 	$s = '';
 	$tid = base64_decode($b64_str);
 	$a = str_split($tid);
 	for ($i=0; $i < count($a); $i++) {
-		$s .= dechex(ord($a[$i]));
+		$s .= zeropad(dechex(ord($a[$i])));
 		//echo ' '.strval($s);
 	}
 	return $s;
