@@ -63,9 +63,9 @@ require_once 'PEAR.php';
  */
 class Auth_Yubico
 {
-	/**#@+
-	 * @access private
-	 */
+  /**#@+
+  * @access private
+    */
 
 	/**
 	 * Yubico client ID
@@ -195,13 +195,39 @@ class Auth_Yubico
 	/* TODO? Add functions to get parsed parts of server response? */
 
 	/**
-	 * Verify Yubico OTP
+	 * Parse parameters from last response
 	 *
-	 * @param string $token     Yubico OTP
-	 * @return mixed            PEAR error on error, true otherwise
+	 * example: getParameters("timestamp", "sessioncounter", "sessionuse");
+	 *
+	 * @param  array      Array with strings representing parameters to parse
+	 * @return array      parameter array from last response
 	 * @access public
 	 */
-	function verify($token)
+	function getParameters($parameters)
+	{
+	  if ($parameters == null) {
+	    $parameters = array("timestamp", "sessioncounter", "sessionuse");
+	  }
+	  $param_array = array();
+	  foreach ($parameters as $param) {
+	    if(!preg_match("/" . $param . "=([0-9]+)/", $this->_response, $out)) {
+	      return PEAR::raiseError('Could not parse parameter ' . $param . ' from response');
+	    }
+	    $param_array[$param]=$out[1];
+	  }
+	  return $param_array;
+	}
+	
+	/**
+	 * Verify Yubico OTP
+	 *
+	 * @param string $token        Yubico OTP
+	 * @param int $use_timestamp   1=>send request with &timestamp=1 to get timestamp
+	 *                             and session information in the response
+	 * @return mixed               PEAR error on error, true otherwise
+	 * @access public
+	 */
+	function verify($token, $use_timestamp=null)
 	{
 		$ret = $this->parsePasswordOTP($token);
 		if (!$ret) {
@@ -209,6 +235,7 @@ class Auth_Yubico
 		}
 
 		$parameters = "id=" . $this->_id . "&otp=" . $ret['otp'];
+		if ($use_timestamp) $parameters = $parameters . "&timestamp=1";
 		/* Generate signature. */
 		if($this->_key <> "") {
 			$signature = base64_encode(hash_hmac('sha1', $parameters, $this->_key, true));
@@ -249,10 +276,17 @@ class Auth_Yubico
 				$response[$row[0]] = $row[1];
 			}
 
-			$check = 'status=' . $response[status] . '&t='. $response[t];
+			$parameters=array("sessioncounter", "sessionuse", "status", "t", "timestamp"); 
+			foreach ($parameters as $param) {
+			  if ($response[$param]!=null) {
+			    if ($check) $check = $check . '&';
+			    $check = $check . $param . '=' . $response[$param];
+			  }
+			}
+			  
 			$checksignature = base64_encode(hash_hmac('sha1', $check, $this->_key, true));
 			if($response[h] != $checksignature) {
-				return PEAR::raiseError('Checked Signature failed');
+			  return PEAR::raiseError('Checked Signature failed');
 			}
 		}
 		
@@ -260,6 +294,7 @@ class Auth_Yubico
 			return PEAR::raiseError($status);
 		}
 
+		
 		return true;
 	}
 }
