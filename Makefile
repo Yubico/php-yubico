@@ -72,7 +72,7 @@ KEYID ?= B9156397
 
 release:
 	make
-	gpg --detach-sign --default-key $(KEYID) $(PACKAGE)-$(VERSION).tar.gz
+	gpg --detach-sign --default-key $(KEYID) $(PACKAGE)-$(VERSION).tgz
 	gpg --verify $(PACKAGE)-$(VERSION).tgz.sig
 	svn copy https://$(PROJECT).googlecode.com/svn/trunk/ \
 	 https://$(PROJECT).googlecode.com/svn/tags/$(PACKAGE)-$(VERSION) \
