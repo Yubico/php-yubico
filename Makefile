@@ -66,9 +66,9 @@ clean:
 	rm -f *~
 	rm -rf $(PACKAGE)-$(VERSION)
 
-PROJECT = php-yubico
-USER ?= simon75j
-KEYID ?= B9156397
+PROJECT=php-yubico
+USER=simon75j
+KEYID=B9156397
 
 release:
 	make
