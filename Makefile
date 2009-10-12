@@ -66,19 +66,21 @@ clean:
 	rm -f *~
 	rm -rf $(PACKAGE)-$(VERSION)
 
-PROJECT=php-yubico
+PROJECT = php-yubico
+USER ?= simon75j
+KEYID ?= B9156397
 
 release:
 	make
-	gpg -b $(PACKAGE)-$(VERSION).tgz
+	gpg --detach-sign --default-key $(KEYID) $(PACKAGE)-$(VERSION).tar.gz
 	gpg --verify $(PACKAGE)-$(VERSION).tgz.sig
 	svn copy https://$(PROJECT).googlecode.com/svn/trunk/ \
 	 https://$(PROJECT).googlecode.com/svn/tags/$(PACKAGE)-$(VERSION) \
 	 -m "Tagging the $(VERSION) release of the $(PACKAGE) project."
 	googlecode_upload.py -s "OpenPGP signature for $(PACKAGE) $(VERSION)." \
-	 -p $(PROJECT) -u simon75j $(PACKAGE)-$(VERSION).tgz.sig
+	 -p $(PROJECT) -u $(USER) $(PACKAGE)-$(VERSION).tgz.sig
 	googlecode_upload.py -s "Auth_Yubico $(VERSION)." \
-	 -p $(PROJECT) -u simon75j $(PACKAGE)-$(VERSION).tgz 
+	 -p $(PROJECT) -u $(USER) $(PACKAGE)-$(VERSION).tgz 
 	cp README ../wiki-$(PROJECT)/ReadMe.wiki && \
 		cd ../wiki-$(PROJECT) && \
 		svn commit -m Sync. ReadMe.wiki
