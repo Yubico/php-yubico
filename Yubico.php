@@ -63,9 +63,9 @@ require_once 'PEAR.php';
  */
 class Auth_Yubico
 {
-  /**#@+
-  * @access private
-    */
+	/**#@+
+	 * @access private
+	 */
 
 	/**
 	 * Yubico client ID
