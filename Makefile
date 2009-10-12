@@ -27,11 +27,17 @@
 
 VERSION=1.8
 PACKAGE=Auth_Yubico
-FILES=Yubico.php package.xml README demo.php example/admin.php		\
-	example/authenticate.php example/config.php example/db.sql	\
-	example/debug.php example/img_press.jpg example/index.html	\
-	example/logo.jpg example/one_factor.php example/style.css	\
-	example/two_factor_legacy.php example/two_factor.php
+FILES=Yubico.php package.xml README demo.php				\
+									\
+	example/admin.php example/authenticate.php example/bg.jpg	\
+	example/config.php example/db.sql example/debug.php		\
+	example/greenBG.jpg example/greenGraphic.jpg			\
+	example/img_press.jpg example/index.html example/logo.jpg	\
+	example/Modhex_Calculator.php example/Modhex.php		\
+	example/one_factor.php example/style.css			\
+	example/two_factor_legacy.php example/two_factor.php		\
+	example/yubicoLogo.gif example/yubicoLogo.jpg			\
+	example/yubikey.jpg example/yubiright_16x16.gif
 
 all: sync-version $(PACKAGE)-$(VERSION).tgz
 
