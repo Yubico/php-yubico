@@ -109,11 +109,10 @@ Authentication failure. Please try again. </h1><br>
 			</tr>
 		</table>
 	</form>
-
-<p>&raquo; <a href="./">Back to main page</a>
-
+	<p>&raquo; <a href="two_factor.php">Try two-factor</a></p>
+	<p>&raquo; <a href="two_factor_legacy.php">Try two-factor with username</a></p>
+	<p>&raquo; <a href="./">Back to main page</a></p>
 <?php } ?>
-
 </div>
 </body>
 </html>

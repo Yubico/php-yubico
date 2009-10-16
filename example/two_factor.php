@@ -62,7 +62,7 @@ if ($authenticated == 0) { ?>
 					<b>Password</b>
 				</td>
 				<td width="470">
-				  <input autocomplete="off" type="text" name="password">
+				  <input autocomplete="off" type="password" name="password">
 				</td>
 			</tr>
 			<tr>
@@ -82,15 +82,15 @@ if ($authenticated == 0) { ?>
 <?php } ?>
 
 	<br /><br />
-	<p>&raquo; <a href="two_factor.php">Try again</a>
-	<p>&raquo; <a href="./">Back to main page</a><br /><br />
-	<br /><br /><br /><br />
+	<p>&raquo; <a href="two_factor_legacy.php">Try two-factor with username</a></p>
+	<p>&raquo; <a href="./">Back to main page</a></p>
+	<br /><br /><br /><br /><br />
 
 <?php if ($authenticated >= 0) { ?>
 	<h3>Technical details</h3>
 	More information about the performed transcaction:
 	<br /><br />
-	<?php include 'debug.php';
+<?php include 'debug.php';
 } ?>
 
 </div>
