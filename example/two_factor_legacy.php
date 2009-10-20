@@ -31,9 +31,7 @@
 				<img src="yubikey.jpg" alt="yubikey" width="150" height="89"/>
 			</div>
 			<div id="greenBarText">
-				<h3>
-				Legacy login: Username/password + YubiKey
-				</h3>
+				<h3>Demo YubiKey + username/password</h3>
 			</div>
 		</div>
 		<div id="bottomContent">		
@@ -56,7 +54,8 @@ if ($authenticated == 0) { ?>
 		<h1 class="fail">Login failure. Please try again. </h1>
 <?php } ?>
 
-	<form name="login" method="post" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px;">
+	<form name="login" method="post" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px;"
+	onSubmit="key.value = (key.value).toLowerCase(); return true;">
 	<input type="hidden" name="mode" value="legacy">
 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
 		<tr>
@@ -94,7 +93,9 @@ if ($authenticated == 0) { ?>
 
 <?php } ?>
 	<br /><br />
-	<p>&raquo; <a href="two_factor.php">Try two-factor</a></p>
+	<p>&raquo; <a href="two_factor_legacy.php">Try again</a></p>
+	<p>&raquo; <a href="one_factor.php">Demo YubiKey only</a></p>
+	<p>&raquo; <a href="two_factor.php">Demo YubiKey + password</a></p>
 	<p>&raquo; <a href="./">Back to main page</a></p>
 	<br /><br /><br /><br /><br />
 

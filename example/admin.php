@@ -31,9 +31,7 @@
 				<img src="yubikey.jpg" alt="yubikey" width="150" height="89"/>
 			</div>
 			<div id="greenBarText">
-				<h3>
-				Set username and password for Demo server
-				</h3>
+				<h3>Set username/password for demo</h3>
 			</div>
 		</div>
 		<div id="bottomContent">
@@ -73,7 +71,8 @@ Authentication failure. Please try again. </h1><br>
 <?php } ?>
 
 
-		<form name="login" method="post" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px;">
+		<form name="login" method="post" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px;"
+		onSubmit="key.value = (key.value).toLowerCase(); return true;">
 		<table border="0" cellspacing="0" cellpadding="0" width="100%">
 			<tr>
 				<td width="150">	  
@@ -103,14 +102,14 @@ Authentication failure. Please try again. </h1><br>
 						<b>YubiKey</b>
 				</td>
 				<td width="470">
-					 <input autocomplete="off" type="password" name="key" class="yubiKeyInput">
+					 <input autocomplete="off" type="text" name="key" class="yubiKeyInput">
 					 <input type="hidden" name="mode" value="admin"><input type="submit" value="Go" style="border: 0px; font-size: 0px; background: none; padding: 0px; margin: 0px; width: 0px; height: 0px;" />
 				</td>
 			</tr>
 		</table>
 	</form>
-	<p>&raquo; <a href="two_factor.php">Try two-factor</a></p>
-	<p>&raquo; <a href="two_factor_legacy.php">Try two-factor with username</a></p>
+	<p>&raquo; <a href="two_factor.php">Demo YubiKey + password</a></p>
+	<p>&raquo; <a href="two_factor_legacy.php">Demo YubiKey + username/password</a></p>
 	<p>&raquo; <a href="./">Back to main page</a></p>
 <?php } ?>
 </div>

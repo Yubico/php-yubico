@@ -30,9 +30,7 @@
 				<img src="yubikey.jpg" alt="yubikey" width="150" height="89"/>
 			</div>
 			<div id="greenBarText">
-				<h3>
-					One factor: YubiKey only
-				</h3>
+				<h3>Demo YubiKey only</h3>
 			</div>
 		</div>
 		<div id="bottomContent">
@@ -52,7 +50,8 @@ if ($authenticated == 0) { ?>
 		<h1 class="fail">Login failure. Please try again. </h1>
 <?php } ?>
 
-	<form name="login" method="post" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px; font-size:12px;">
+	<form name="login" method="post" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px; font-size:12px;"
+	onSubmit="key.value = (key.value).toLowerCase(); return true;">
 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
 		<tr>
 			<td>
@@ -68,9 +67,12 @@ if ($authenticated == 0) { ?>
 <?php } ?>
 
 	<br /><br />
-	<p>&raquo; <a href="one_factor.php">Try again</a>
-	<p>&raquo; <a href="./">Back to main page</a><br /><br />
-	<br /><br /><br /><br />
+	<p>&raquo; <a href="one_factor.php">Try again</a></p>
+	<p>&raquo; <a href="two_factor.php">Demo YubiKey + password</a></p>
+	<p>&raquo; <a href="two_factor_legacy.php">Demo YubiKey + username/password</a></p>
+	<p>&raquo; <a href="admin.php">Set username/password for Demo</a></p>
+	<p>&raquo; <a href="./">Back to main page</a></p>
+	<br /><br /><br /><br /><br />
 
 <?php if ($authenticated >= 0) { ?>
 	<h3>Technical details</h3>
