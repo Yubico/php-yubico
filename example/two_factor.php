@@ -31,10 +31,11 @@
 				<img src="yubikey.jpg" alt="yubikey" width="150" height="89"/>
 			</div>
 			<div id="greenBarText">
-				<h3>Demo YubiKey + password</h3>
+				<h3>Basic Login Demo</h3>
 			</div>
 		</div>
 		<div id="bottomContent">
+		<h4>Demo YubiKey + password</h4>
 <?php include 'authenticate.php';
 if ($authenticated == 0) { ?>
 	<h1 class="ok">Congratulations <?php if ($realname) { print "$realname!"; }?></h1>

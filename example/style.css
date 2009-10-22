@@ -84,6 +84,9 @@
 		}
 
 
+		#bottomContent h4{
+		font-size: 13px;
+		}
 		
 		
 		input{
@@ -108,6 +111,7 @@
 		#bottomContent ol {
 		margin: 0;
  		padding: 20px;
+ 		padding-top: 0px;
 		}
 		
 		#bottomContent table, tr, td, th {

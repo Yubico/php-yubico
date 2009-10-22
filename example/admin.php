@@ -31,10 +31,11 @@
 				<img src="yubikey.jpg" alt="yubikey" width="150" height="89"/>
 			</div>
 			<div id="greenBarText">
-				<h3>Set username/password for demo</h3>
+				<h3>Basic Login Demo</h3>
 			</div>
 		</div>
 		<div id="bottomContent">
+		<h4>Set username/password for demo</h4>
 <?php include 'authenticate.php';
 if (preg_match("<[^a-zA-Z0-9_!%&/()=-]>", $password) ||
     preg_match("<[^a-zA-Z0-9_!%&/()=-]>", $username)) {
