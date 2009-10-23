@@ -43,8 +43,7 @@ if ($authenticated == 0) { ?>
 <?php } else { ?>
 	<ol style="list-style-position: outside;">
 	<li>Place your YubiKey in the USB-port.</li>
-	<li>Put your finger on the YubiKey button and hold it
-	  steady until the YubiKey field is filled.</li>
+	<li>Touch YubiKey button.</li>
 	</ol>
 	<br />
 

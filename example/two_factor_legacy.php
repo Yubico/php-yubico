@@ -45,8 +45,7 @@ if ($authenticated == 0) { ?>
 	<li>Place your YubiKey in the USB-port.</li>
 	<li>Enter Username in the username field.</li>
 	<li>Enter password.</li>
-	<li>Put your finger on the YubiKey button and hold it
-	  steady until the YubiKey field is filled.</li>
+	<li>Touch YubiKey button.</li>
 	</ol>
 	<p>No password? You can <a href="admin.php">set password</a> directly. </p>
 	<br />

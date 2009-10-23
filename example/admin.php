@@ -55,14 +55,15 @@ if ($authenticated == 0) {
 
 		<h1 class="ok">Congratulations <?php if ($realname) { print "$realname!"; }?></h1>
 		You have successfully set the username/password to use with the Demo server.
-		<p>&raquo; <a href="./">Continue to main page&gt;&gt;</a>
+		<p>&raquo; <a href="two_factor.php">Demo YubiKey + password</a></p>
+		<p>&raquo; <a href="two_factor_legacy.php">Demo YubiKey + username/password</a></p>
+		<p>&raquo; <a href="./">Back to main page</a></p>
 <?php } else { ?>
 
 	<ol>
 		<li>Place your YubiKey in the USB-port.</li>
 		<li>Enter Username and Password.</li>
-		<li>Put your finger on the YubiKey button and hold it
-		  steady until the YubiKey field is filled.</li>
+		<li>Touch YubiKey button.</li>
 	</ol>
 <br>
 
