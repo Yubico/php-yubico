@@ -86,6 +86,18 @@ class Auth_Yubico
 	var $_url;
 
 	/**
+	 * List with URL part of validation servers
+	 * @var array
+	 */
+	var $_url_list;
+
+	/**
+	 * index to _url_list
+	 * @var int
+	 */
+	var $_url_index;
+
+	/**
 	 * Query to server
 	 * @var string
 	 */
@@ -117,6 +129,7 @@ class Auth_Yubico
 		$this->_id =  $id;
 		$this->_key = base64_decode($key);
 		$this->_https = $https;
+		
 	}
 
 	/**
@@ -146,6 +159,38 @@ class Auth_Yubico
 		}
 	}
 
+
+	/**
+	 * Get next URL part from list to use for validation.
+	 *
+	 * @mixed string with URL part of false if no more URLs in list
+	 * @access public
+	 */
+	function getNextURLpart()
+	{
+	  if ($this->_url_list) $url_list=$this->_url_list;
+	  else $url_list=array('api2.yubico.com/wsapi/2.0/verify', 
+			       'api3.yubico.com/wsapi/2.0/verify', 
+			       'api4.yubico.com/wsapi/2.0/verify');
+	  
+	  if ($this->_url_index>=count($url_list)) return false;
+	  else return $url_list[$this->_url_index++];
+	}
+
+	/**
+	 * Resets index to URL list
+	 *
+	 * @access public
+	 */
+	function URLreset()
+	{
+	  $this->_url_index=0;
+	}
+	function addURLpart($URLpart) 
+	{
+	  $this->_url_list[]=$URLpart;
+	}
+	
 	/**
 	 * Return the last query sent to the server, if any.
 	 *
@@ -206,7 +251,7 @@ class Auth_Yubico
 	function getParameters($parameters)
 	{
 	  if ($parameters == null) {
-	    $parameters = array("timestamp", "sessioncounter", "sessionuse");
+	    $parameters = array('timestamp', 'sessioncounter', 'sessionuse');
 	  }
 	  $param_array = array();
 	  foreach ($parameters as $param) {
@@ -217,7 +262,7 @@ class Auth_Yubico
 	  }
 	  return $param_array;
 	}
-	
+
 	/**
 	 * Verify Yubico OTP
 	 *
@@ -297,5 +342,164 @@ class Auth_Yubico
 		
 		return true;
 	}
+	
+
+	/**
+	 * Verify Yubico OTP against multiple URLs
+	 * Protocol specification 2.0 is used to construct validation requests
+	 *
+	 * @param string $token        Yubico OTP
+	 * @param int $use_timestamp   1=>send request with &timestamp=1 to get timestamp
+	 *                             and session information in the response
+	 * @return mixed               PEAR error on error, true otherwise
+	 * @access public
+	 */
+	function multi_verify($token, $use_timestamp=null, $wait_for_all=False,$sl=null, $timeout=null)
+	{
+		$ret = $this->parsePasswordOTP($token);
+		if (!$ret) {
+			return PEAR::raiseError('Could not parse Yubikey OTP');
+		}
+
+		$params = array('id'=>$this->_id, 
+				'otp'=>$ret['otp'],
+				'nonce'=>md5(uniqid(rand())));
+		/* Take care of protocol version 2 parameters */
+		if ($use_timestamp) $params['timestamp'] = 1;
+		if ($sl) $params['sl'] = $sl;
+		if ($timeout) $params['timeout'] = $timeout;
+
+		/* Construct parameters string */
+		ksort($params);
+		foreach($params as $p=>$v) $parameters .= "&" . $p . "=" . $v;
+		$parameters = ltrim($parameters, "&");
+
+		/* Generate signature. */
+		if($this->_key <> "") {
+			$signature = base64_encode(hash_hmac('sha1', $parameters, $this->_key, true));
+			$signature = preg_replace('/\+/', '%2B', $signature);
+			$parameters .= '&h=' . $signature;
+		}
+
+		$this->_response=null;
+		$this->URLreset();
+		$mh = curl_multi_init();
+		$ch = array();
+		while($URLpart=$this->getNextURLpart()) 
+		  {
+		    /* Support https. */
+		    if ($this->_https) {
+		      $this->_query = "https://";
+		    } else {
+		      $this->_query = "http://";
+		    }
+		    $this->_query .= $URLpart;
+		    $this->_query .= "?";
+		    $this->_query .= $parameters;
+		    
+		    $handle = curl_init($this->_query);
+		    curl_setopt($handle, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
+		    curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+		    curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 0);
+		    curl_setopt($handle, CURLOPT_FAILONERROR, true);
+		    /* If timeout is set, we better apply it here as well
+		     in case the validation server fails to follow it. 
+		    */ 
+		    if ($timeout) curl_setopt($handle, CURLOPT_TIMEOUT, $timeout);
+		    curl_multi_add_handle($mh, $handle);
+		    
+		    $ch[$handle] = $handle;
+		  }
+		
+
+		$replay=False;
+		$valid=False;
+		do {
+		  while (($mrc = curl_multi_exec($mh, $active)) == CURLM_CALL_MULTI_PERFORM)
+		    ;
+
+		  while ($info = curl_multi_info_read($mh)) {
+		    if ($info['result'] == CURL_OK) {
+		      $str = curl_multi_getcontent($info['handle']);
+		      
+		      if(preg_match("/status=([a-zA-Z0-9_]+)/", $str, $out)) {
+			
+			$status = $out[1];
+			$cinfo = curl_getinfo ($info['handle']);
+			$this->_response .= ' status=' . $status .' for url ' . $cinfo['url'] . "\n";
+
+			/* Verify signature. */
+			if($this->_key <> "") {
+			  $rows = split("\r\n", $str);
+			  while (list($key, $val) = each($rows)) {
+			    /* = is also used in BASE64 encoding so we only replace the first = by # which is not used in BASE64 */
+			    $val = preg_replace('/=/', '#', $val, 1);
+			    $row = split("#", $val);
+			    $response[$row[0]] = $row[1];
+			  }
+
+			  $parameters=array('nonce','otp', 'sessioncounter', 'sessionuse', 'sl', 'status', 't', 'timeout', 'timestamp');
+			  sort($parameters);
+			  $check=Null;
+			  foreach ($parameters as $param) {
+			    if ($response[$param]!=null) {
+			      if ($check) $check = $check . '&';
+			      $check = $check . $param . '=' . $response[$param];
+			    }
+			  }
+
+			  $checksignature = base64_encode(hash_hmac('sha1', $check, $this->_key, true));
+			  if($response[h] == $checksignature) {
+			    if ($status == 'REPLAYED_OTP') {
+			      $replay=True;
+			    } 
+			    if ($status == 'OK') {
+			      $valid=True;
+			    }
+			  }
+			} else {
+			
+			  if ($status == 'REPLAYED_OTP') {
+			    $replay=True;
+			  } 
+			  if ($status == 'OK') {
+			    $valid=True;
+			  }
+			}
+		      }
+		      if (!$wait_for_all && ($valid || $replay)) 
+			{
+			  
+			  /* We have a valid answer or a replay, loop should be ended here */
+			  foreach ($ch as $h) {
+			    curl_multi_remove_handle($mh, $h);
+			    curl_close($h);
+			  }
+			  curl_multi_close($mh);
+			  if ($replay) return PEAR::raiseError('REPLAYED_OTP');
+			  if ($valid) return true;
+			  return PEAR::raiseError($status);
+			}
+		      
+		      curl_multi_remove_handle($mh, $info['handle']);
+		      curl_close($info['handle']);
+		      unset ($ch[$info['handle']]);
+		    }
+		    curl_multi_select($mh);
+		  }
+		} while ($active);
+		
+		foreach ($ch as $h) {
+		  curl_multi_remove_handle ($mh, $h);
+		  curl_close ($h);
+		}
+		curl_multi_close ($mh);
+		
+		if ($replay) return PEAR::raiseError('REPLAYED_OTP');
+		if ($valid) return true;
+		return PEAR::raiseError('NO_VALID_ANSWER');
+	}
+
+
 }
 ?>
