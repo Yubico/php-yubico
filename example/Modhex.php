@@ -83,12 +83,7 @@ function hexToB64($hex_str) {
 	$s = '';
 	$a = str_split($hex_str, 2);
 	for ($i=0; $i < count($a); $i++) {
-		if($a[$i] == '00') {
-			$s .= chr(hexdec($a[$i]));
-			$s .= chr(hexdec($a[$i]));
-		} else {
-			$s .= chr(hexdec($a[$i]));	
-		}
+		$s .= chr(hexdec($a[$i]));	
 		//echo '? '.strval($s).' :: '.$a[$i];
 	}
 	return base64_encode($s);
