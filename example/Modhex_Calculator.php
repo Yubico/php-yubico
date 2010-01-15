@@ -65,10 +65,10 @@ if (strlen($srctext) > 0) {
 	} else if ($srcfmt == "N") {
 		$numval = intval($srctext);
 		$decval = dechex($numval);
-		$padcount = strlen($decval) % 8; 
-		for ($j = 0; $j < $padcount; $j++) {
-			$decval = '0'.$decval;
-		}
+		//$padcount = strlen($decval) % 8; 
+		//for ($j = 0; $j < $padcount; $j++) {
+		//	$decval = '0'.$decval;
+		//}
 		//echo 'Test Val : '.$numval.' :: '.$decval;
 		$b64txt = hexToB64($decval);
 		//echo 'Test B64 : '.$b64txt;

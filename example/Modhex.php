@@ -73,7 +73,8 @@ function b64ToHex($b64_str) {
 	$tid = base64_decode($b64_str);
 	$a = str_split($tid);
 	for ($i=0; $i < count($a); $i++) {
-		$s .= zeropad(dechex(ord($a[$i])));
+		//$s .= zeropad(dechex(ord($a[$i])));
+		$s .= dechex(ord($a[$i]));
 		//echo ' '.strval($s);
 	}
 	return $s;
