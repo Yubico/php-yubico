@@ -57,20 +57,17 @@ if (strlen($srctext) > 0) {
 	if($srcfmt == "P") {
 		$b64txt = base64_encode($srctext);
 	} else if ($srcfmt == "H") {
-		$decval = $srctext;
-		$b64txt = hexToB64($decval);
-		//echo 'Test B64 : '.$b64txt.' :: '.$decval;
+		$hexval = $srctext;
+		$b64txt = hexToB64($hexval);
+		//echo 'Test B64 : '.$b64txt.' :: '.$hexval;
 	} else if ($srcfmt == "M") {
 		$b64txt = modhexToB64($srctext);
 	} else if ($srcfmt == "N") {
-		$numval = intval($srctext);
-		$decval = dechex($numval);
-		//$padcount = strlen($decval) % 8; 
-		//for ($j = 0; $j < $padcount; $j++) {
-		//	$decval = '0'.$decval;
-		//}
-		//echo 'Test Val : '.$numval.' :: '.$decval;
-		$b64txt = hexToB64($decval);
+		//$numval = intval($srctext);
+		$numval = gmp_init($srctext);
+		$hexval = gmp_strval($numval,16);
+		//echo 'Test Val : '.$numval.' :: '.$hexval;
+		$b64txt = hexToB64($hexval);
 		//echo 'Test B64 : '.$b64txt;
 	} 
 	
@@ -78,7 +75,7 @@ if (strlen($srctext) > 0) {
 	//$devId_b64 = modhexToB64($devId);
 	echo '<h2>Your source string is:</h2><ul>'.
 		'<li>Plain text: ' . base64_decode($b64txt) .
-		'<li>Number: ' . strval(hexdec(b64ToHex($b64txt))) .
+		'<li>Number: ' . gmp_strval(gmp_init(b64ToHex($b64txt),16)) .
 		'<li>Modhex encoded: ' . b64ToModhex($b64txt) .
 		'<li>Base64 encoded: ' . $b64txt .
 		'<li>Hex encoded: ' . b64ToHex($b64txt) . 
