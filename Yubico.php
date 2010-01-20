@@ -356,150 +356,168 @@ class Auth_Yubico
 	 */
 	function multi_verify($token, $use_timestamp=null, $wait_for_all=False,$sl=null, $timeout=null)
 	{
-		$ret = $this->parsePasswordOTP($token);
-		if (!$ret) {
-			return PEAR::raiseError('Could not parse Yubikey OTP');
-		}
+	  $ret = $this->parsePasswordOTP($token);
+	  if (!$ret) {
+	    return PEAR::raiseError('Could not parse Yubikey OTP');
+	  }
+	  
+	  $params = array('id'=>$this->_id, 
+			  'otp'=>$ret['otp'],
+			  'nonce'=>md5(uniqid(rand())));
+	  /* Take care of protocol version 2 parameters */
+	  if ($use_timestamp) $params['timestamp'] = 1;
+	  if ($sl) $params['sl'] = $sl;
+	  if ($timeout) $params['timeout'] = $timeout;
+	  
+	  /* Construct parameters string */
+	  ksort($params);
+	  foreach($params as $p=>$v) $parameters .= "&" . $p . "=" . $v;
+	  $parameters = ltrim($parameters, "&");
+	  
+	  /* Generate signature. */
+	  if($this->_key <> "") {
+	    $signature = base64_encode(hash_hmac('sha1', $parameters, $this->_key, true));
+	    $signature = preg_replace('/\+/', '%2B', $signature);
+	    $parameters .= '&h=' . $signature;
+	  }
+	  
+	  $this->_response=null;
+	  $this->URLreset();
+	  $mh = curl_multi_init();
+	  $ch = array();
+	  while($URLpart=$this->getNextURLpart()) 
+	    {
+	      /* Support https. */
+	      if ($this->_https) {
+		$this->_query = "https://";
+	      } else {
+		$this->_query = "http://";
+	      }
+	      $this->_query .= $URLpart;
+	      $this->_query .= "?";
+	      $this->_query .= $parameters;
+	      
+	      $handle = curl_init($this->_query);
+	      curl_setopt($handle, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
+	      curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+	      curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 0);
+	      curl_setopt($handle, CURLOPT_FAILONERROR, true);
+	      /* If timeout is set, we better apply it here as well
+	       in case the validation server fails to follow it. 
+	      */ 
+	      if ($timeout) curl_setopt($handle, CURLOPT_TIMEOUT, $timeout);
+	      curl_multi_add_handle($mh, $handle);
+	      
+	      $ch[$handle] = $handle;
+	    }
+	  
+	  
+	  $replay=False;
+	  $valid=False;
+	  do {
+	    while (($mrc = curl_multi_exec($mh, $active)) == CURLM_CALL_MULTI_PERFORM)
+	      ;
+	    
+	    while ($info = curl_multi_info_read($mh)) {
+	      if ($info['result'] == CURL_OK) {
+		$str = curl_multi_getcontent($info['handle']);
 
-		$params = array('id'=>$this->_id, 
-				'otp'=>$ret['otp'],
-				'nonce'=>md5(uniqid(rand())));
-		/* Take care of protocol version 2 parameters */
-		if ($use_timestamp) $params['timestamp'] = 1;
-		if ($sl) $params['sl'] = $sl;
-		if ($timeout) $params['timeout'] = $timeout;
-
-		/* Construct parameters string */
-		ksort($params);
-		foreach($params as $p=>$v) $parameters .= "&" . $p . "=" . $v;
-		$parameters = ltrim($parameters, "&");
-
-		/* Generate signature. */
-		if($this->_key <> "") {
-			$signature = base64_encode(hash_hmac('sha1', $parameters, $this->_key, true));
-			$signature = preg_replace('/\+/', '%2B', $signature);
-			$parameters .= '&h=' . $signature;
-		}
-
-		$this->_response=null;
-		$this->URLreset();
-		$mh = curl_multi_init();
-		$ch = array();
-		while($URLpart=$this->getNextURLpart()) 
-		  {
-		    /* Support https. */
-		    if ($this->_https) {
-		      $this->_query = "https://";
-		    } else {
-		      $this->_query = "http://";
+		if(preg_match("/status=([a-zA-Z0-9_]+)/", $str, $out)) {
+		  
+		  $status = $out[1];
+		  $cinfo = curl_getinfo ($info['handle']);
+		  
+		  /* 
+		   There are 3 cases.
+		   1. OTP or Nonce values doesn't match and answer is considered neither valid or a replay
+		   2. First signature is verified, then we consider the answer to be a replay or valid depending on the status
+		   3. We consider the answer to be a replay or valid depending on the status directly
+		  */
+		  if (!preg_match("/otp=".$params['otp']."/", $str) ||
+		      !preg_match("/nonce=".$params['nonce']."/", $str)) {
+		    /* Case 1. Answer is neither valid or a replay. */
+		    $this->_response .= " OTP or nonce mismatch. status=" . $status;
+		  } 
+		  elseif($this->_key <> "") {
+		    /* Case 2. Verify signature first */
+		    $rows = split("\r\n", $str);
+		    $response=array();
+		    while (list($key, $val) = each($rows)) {
+		      /* = is also used in BASE64 encoding so we only replace the first = by # which is not used in BASE64 */
+		      $val = preg_replace('/=/', '#', $val, 1);
+		      $row = split("#", $val);
+		      $response[$row[0]] = $row[1];
 		    }
-		    $this->_query .= $URLpart;
-		    $this->_query .= "?";
-		    $this->_query .= $parameters;
 		    
-		    $handle = curl_init($this->_query);
-		    curl_setopt($handle, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
-		    curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
-		    curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 0);
-		    curl_setopt($handle, CURLOPT_FAILONERROR, true);
-		    /* If timeout is set, we better apply it here as well
-		     in case the validation server fails to follow it. 
-		    */ 
-		    if ($timeout) curl_setopt($handle, CURLOPT_TIMEOUT, $timeout);
-		    curl_multi_add_handle($mh, $handle);
-		    
-		    $ch[$handle] = $handle;
-		  }
-		
-
-		$replay=False;
-		$valid=False;
-		do {
-		  while (($mrc = curl_multi_exec($mh, $active)) == CURLM_CALL_MULTI_PERFORM)
-		    ;
-
-		  while ($info = curl_multi_info_read($mh)) {
-		    if ($info['result'] == CURL_OK) {
-		      $str = curl_multi_getcontent($info['handle']);
-		      
-		      if(preg_match("/status=([a-zA-Z0-9_]+)/", $str, $out)) {
-			
-			$status = $out[1];
-			$cinfo = curl_getinfo ($info['handle']);
-			$this->_response .= ' status=' . $status .' for url ' . $cinfo['url'] . "\n";
-
-			/* Verify signature. */
-			if($this->_key <> "") {
-			  $rows = split("\r\n", $str);
-			  while (list($key, $val) = each($rows)) {
-			    /* = is also used in BASE64 encoding so we only replace the first = by # which is not used in BASE64 */
-			    $val = preg_replace('/=/', '#', $val, 1);
-			    $row = split("#", $val);
-			    $response[$row[0]] = $row[1];
-			  }
-
-			  $parameters=array('nonce','otp', 'sessioncounter', 'sessionuse', 'sl', 'status', 't', 'timeout', 'timestamp');
-			  sort($parameters);
-			  $check=Null;
-			  foreach ($parameters as $param) {
-			    if ($response[$param]!=null) {
-			      if ($check) $check = $check . '&';
-			      $check = $check . $param . '=' . $response[$param];
-			    }
-			  }
-
-			  $checksignature = base64_encode(hash_hmac('sha1', $check, $this->_key, true));
-			  if($response[h] == $checksignature) {
-			    if ($status == 'REPLAYED_OTP') {
-			      $replay=True;
-			    } 
-			    if ($status == 'OK') {
-			      $valid=True;
-			    }
-			  }
-			} else {
-			
-			  if ($status == 'REPLAYED_OTP') {
-			    $replay=True;
-			  } 
-			  if ($status == 'OK') {
-			    $valid=True;
-			  }
-			}
+		    $parameters=array('nonce','otp', 'sessioncounter', 'sessionuse', 'sl', 'status', 't', 'timeout', 'timestamp');
+		    sort($parameters);
+		    $check=Null;
+		    foreach ($parameters as $param) {
+		      if ($response[$param]!=null) {
+			if ($check) $check = $check . '&';
+			$check = $check . $param . '=' . $response[$param];
 		      }
-		      if (!$wait_for_all && ($valid || $replay)) 
-			{
-			  
-			  /* We have a valid answer or a replay, loop should be ended here */
-			  foreach ($ch as $h) {
-			    curl_multi_remove_handle($mh, $h);
-			    curl_close($h);
-			  }
-			  curl_multi_close($mh);
-			  if ($replay) return PEAR::raiseError('REPLAYED_OTP');
-			  if ($valid) return true;
-			  return PEAR::raiseError($status);
-			}
-		      
-		      curl_multi_remove_handle($mh, $info['handle']);
-		      curl_close($info['handle']);
-		      unset ($ch[$info['handle']]);
 		    }
-		    curl_multi_select($mh);
-		  }
-		} while ($active);
-		
-		foreach ($ch as $h) {
-		  curl_multi_remove_handle ($mh, $h);
-		  curl_close ($h);
-		}
-		curl_multi_close ($mh);
-		
-		if ($replay) return PEAR::raiseError('REPLAYED_OTP');
-		if ($valid) return true;
-		return PEAR::raiseError('NO_VALID_ANSWER');
-	}
+		    
 
+		    $checksignature = base64_encode(hash_hmac('sha1', utf8_encode($check), $this->_key, true));
+
+		    if($response[h] == $checksignature) {
+		      if ($status == 'REPLAYED_OTP') {
+			$replay=True;
+		      } 
+		      if ($status == 'OK') {
+			$valid=True;
+		      }
+		      $this->_response .= " status=" . $status;
+		    } else {
+		      $this->_response .= " Signature mismatch. status=" . $status ;
+		    }
+		  } else {
+		    /* Case 3. We check the status directly */
+		    if ($status == 'REPLAYED_OTP') {
+		      $replay=True;
+		    } 
+		    if ($status == 'OK') {
+		      $valid=True;
+		    }
+		    $this->_response .= " status=" . $status;
+		  }
+		  $this->_response .= ' for url ' . $cinfo['url'] ."\n";
+		}
+		if (!$wait_for_all && ($valid || $replay)) 
+		  {
+		    
+		    /* We have a valid answer or a replay, loop should be ended here */
+		    foreach ($ch as $h) {
+		      curl_multi_remove_handle($mh, $h);
+		      curl_close($h);
+		    }
+		    curl_multi_close($mh);
+		    if ($replay) return PEAR::raiseError('REPLAYED_OTP');
+		    if ($valid) return true;
+		    return PEAR::raiseError($status);
+		  }
+		
+		curl_multi_remove_handle($mh, $info['handle']);
+		curl_close($info['handle']);
+		unset ($ch[$info['handle']]);
+	      }
+	      curl_multi_select($mh);
+	    }
+	  } while ($active);
+	  
+	  foreach ($ch as $h) {
+	    curl_multi_remove_handle ($mh, $h);
+	    curl_close ($h);
+	  }
+	  curl_multi_close ($mh);
+	  
+	  if ($replay) return PEAR::raiseError('REPLAYED_OTP');
+	  if ($valid) return true;
+	  return PEAR::raiseError('NO_VALID_ANSWER');
+	}
+	
 
 }
 ?>
