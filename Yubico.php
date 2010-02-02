@@ -4,7 +4,7 @@
    *
    * LICENSE:
    *
-   * Copyright (c) 2007, 2008, 2009  Simon Josefsson.  All rights reserved.
+   * Copyright (c) 2007, 2008, 2009, 2010  Yubico AB.  All rights reserved.
    *
    * Redistribution and use in source and binary forms, with or without
    * modification, are permitted provided that the following conditions
@@ -33,8 +33,8 @@
    *
    * @category    Auth
    * @package     Auth_Yubico
-   * @author      Simon Josefsson <simon@yubico.com>
-   * @copyright   2009 Simon Josefsson
+   * @author      Simon Josefsson <simon@yubico.com>, Olov Danielson <olov@yubico.com>
+   * @copyright   2007, 2008, 2009, 2010 Yubico AB
    * @license     http://opensource.org/licenses/bsd-license.php New BSD License
    * @version     1.6
    * @link        http://www.yubico.com/
@@ -225,8 +225,8 @@ class Auth_Yubico
 	function parsePasswordOTP($str, $delim = '[:]')
 	{
 		if (!preg_match("/^((.*)" . $delim . ")?" .
-				"(([cbdefghijklnrtuv]{0,16})" .
-				"([cbdefghijklnrtuv]{32}))$/",
+				"(([cbdefghijklnrtuvCBDEFGHIJKLNRTUV]{0,16})" .
+				"([cbdefghijklnrtuvCBDEFGHIJKLNRTUV]{32}))$/",
 				$str, $matches)) {
 			return false;
 		}
