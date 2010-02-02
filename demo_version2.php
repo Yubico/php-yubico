@@ -46,7 +46,7 @@
      $key = "oBVbNt7IZehZGR99rvq8d6RZ1DM=";
    }
    if (!$url) {
-     $url = "api2.yubico.com/wsapi/2.0/verify,api3.yubico.com/wsapi/2.0/verify,api4.yubico.com/wsapi/2.0/verify";
+     $url = "api1.yubico.com/wsapi/2.0/verify,api2.yubico.com/wsapi/2.0/verify,api3.yubico.com/wsapi/2.0/verify,api4.yubico.com/wsapi/2.0/verify,api5.yubico.com/wsapi/2.0/verify";
    }
    if (!$id) {
      $id = "1851";
