@@ -129,7 +129,6 @@ class Auth_Yubico
 		$this->_id =  $id;
 		$this->_key = base64_decode($key);
 		$this->_https = $https;
-		
 	}
 
 	/**
@@ -340,11 +339,9 @@ class Auth_Yubico
 		if ($status != 'OK') {
 			return PEAR::raiseError($status);
 		}
-
 		
 		return true;
 	}
-	
 
 	/**
 	 * Verify Yubico OTP against multiple URLs
@@ -519,7 +516,5 @@ class Auth_Yubico
 	  if ($valid) return true;
 	  return PEAR::raiseError('NO_VALID_ANSWER');
 	}
-	
-
 }
 ?>
