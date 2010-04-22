@@ -168,7 +168,7 @@ class Auth_Yubico
 	function getNextURLpart()
 	{
 	  if ($this->_url_list) $url_list=$this->_url_list;
-	  else $url_list=array('api1.yubico.com/wsapi/2.0/verify',
+	  else $url_list=array('api.yubico.com/wsapi/2.0/verify',
 			       'api2.yubico.com/wsapi/2.0/verify', 
 			       'api3.yubico.com/wsapi/2.0/verify', 
 			       'api4.yubico.com/wsapi/2.0/verify',
