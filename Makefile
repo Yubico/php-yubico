@@ -1,4 +1,4 @@
-# Copyright (c) 2007, 2008, 2009  Simon Josefsson.  All rights reserved.
+# Copyright (c) 2007, 2008, 2009, 2010  Simon Josefsson.  All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -27,9 +27,8 @@
 
 VERSION=1.10rc
 PACKAGE=Auth_Yubico
-FILES=Yubico.php package.xml README demo.php				\
-									\
-	example/admin.php example/authenticate.php example/bg.jpg	\
+CODE=Yubico.php package.xml README demo.php
+EXAMPLE=example/admin.php example/authenticate.php example/bg.jpg	\
 	example/config.php example/db.sql example/debug.php		\
 	example/greenBG.jpg example/greenGraphic.jpg			\
 	example/img_press.jpg example/index.html example/logo.jpg	\
@@ -41,9 +40,10 @@ FILES=Yubico.php package.xml README demo.php				\
 
 all: sync-version $(PACKAGE)-$(VERSION).tgz
 
-$(PACKAGE)-$(VERSION).tgz: $(FILES)
-	mkdir $(PACKAGE)-$(VERSION)
-	cp $(FILES) $(PACKAGE)-$(VERSION)
+$(PACKAGE)-$(VERSION).tgz: $(CODE) $(EXAMPLE)
+	mkdir $(PACKAGE)-$(VERSION) $(PACKAGE)-$(VERSION)/example
+	cp $(CODE) $(PACKAGE)-$(VERSION)
+	cp $(EXAMPLE) $(PACKAGE)-$(VERSION)/example
 	tar cfz $(PACKAGE)-$(VERSION).tgz $(PACKAGE)-$(VERSION)
 	rm -rf $(PACKAGE)-$(VERSION)
 
