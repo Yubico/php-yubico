@@ -25,7 +25,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-VERSION=1.10rc
+VERSION=2.0
 PACKAGE=Auth_Yubico
 CODE=Yubico.php package.xml README demo.php
 EXAMPLE=example/admin.php example/authenticate.php example/bg.jpg	\

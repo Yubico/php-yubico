@@ -36,7 +36,7 @@
    * @author      Simon Josefsson <simon@yubico.com>, Olov Danielson <olov@yubico.com>
    * @copyright   2007, 2008, 2009, 2010 Yubico AB
    * @license     http://opensource.org/licenses/bsd-license.php New BSD License
-   * @version     1.6
+   * @version     2.0
    * @link        http://www.yubico.com/
    */
 
@@ -187,6 +187,7 @@ class Auth_Yubico
 	{
 	  $this->_url_index=0;
 	}
+
 	function addURLpart($URLpart) 
 	{
 	  $this->_url_list[]=$URLpart;
@@ -265,85 +266,6 @@ class Auth_Yubico
 	}
 
 	/**
-	 * Verify Yubico OTP
-	 *
-	 * @param string $token        Yubico OTP
-	 * @param int $use_timestamp   1=>send request with &timestamp=1 to get timestamp
-	 *                             and session information in the response
-	 * @return mixed               PEAR error on error, true otherwise
-	 * @access public
-	 */
-	function verify($token, $use_timestamp=null)
-	{
-		$ret = $this->parsePasswordOTP($token);
-		if (!$ret) {
-			return PEAR::raiseError('Could not parse Yubikey OTP');
-		}
-
-		$parameters = "id=" . $this->_id . "&otp=" . $ret['otp'];
-		if ($use_timestamp) $parameters = $parameters . "&timestamp=1";
-		/* Generate signature. */
-		if($this->_key <> "") {
-			$signature = base64_encode(hash_hmac('sha1', $parameters, $this->_key, true));
-			$signature = preg_replace('/\+/', '%2B', $signature);
-			$parameters .= '&h=' . $signature;
-		}
-
-		/* Support https. */
-		if ($this->_https) {
-		  $this->_query = "https://";
-		} else {
-		  $this->_query = "http://";
-		}
-		$this->_query .= $this->getURLpart();
-		$this->_query .= "?";
-		$this->_query .= $parameters;
-
-		$ch = curl_init($this->_query);
-		curl_setopt($ch, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		$this->_response = curl_exec($ch);
-		curl_close($ch);
-		
-		if(!preg_match("/status=([a-zA-Z0-9_]+)/", $this->_response, $out)) {
-			return PEAR::raiseError('Could not parse response');
-		}
-
-		$status = $out[1];
-		
-		/* Verify signature. */
-		if($this->_key <> "") {
-			$rows = split("\r\n", $this->_response);
-			while (list($key, $val) = each($rows)) {
-				// = is also used in BASE64 encoding so we only replace the first = by # which is not used in BASE64
-				$val = preg_replace('/=/', '#', $val, 1);
-				$row = split("#", $val);
-				$response[$row[0]] = $row[1];
-			}
-
-			$parameters=array("sessioncounter", "sessionuse", "status", "t", "timestamp"); 
-			foreach ($parameters as $param) {
-			  if ($response[$param]!=null) {
-			    if ($check) $check = $check . '&';
-			    $check = $check . $param . '=' . $response[$param];
-			  }
-			}
-			  
-			$checksignature = base64_encode(hash_hmac('sha1', $check, $this->_key, true));
-			if($response[h] != $checksignature) {
-			  return PEAR::raiseError('Checked Signature failed');
-			}
-		}
-		
-		if ($status != 'OK') {
-			return PEAR::raiseError($status);
-		}
-		
-		return true;
-	}
-
-	/**
 	 * Verify Yubico OTP against multiple URLs
 	 * Protocol specification 2.0 is used to construct validation requests
 	 *
@@ -353,7 +275,7 @@ class Auth_Yubico
 	 * @return mixed               PEAR error on error, true otherwise
 	 * @access public
 	 */
-	function multi_verify($token, $use_timestamp=null, $wait_for_all=False,$sl=null, $timeout=null)
+	function verify($token, $use_timestamp=null, $wait_for_all=False,$sl=null, $timeout=null)
 	{
 	  $ret = $this->parsePasswordOTP($token);
 	  if (!$ret) {
@@ -402,14 +324,13 @@ class Auth_Yubico
 	      curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 0);
 	      curl_setopt($handle, CURLOPT_FAILONERROR, true);
 	      /* If timeout is set, we better apply it here as well
-	       in case the validation server fails to follow it. 
+	         in case the validation server fails to follow it. 
 	      */ 
 	      if ($timeout) curl_setopt($handle, CURLOPT_TIMEOUT, $timeout);
 	      curl_multi_add_handle($mh, $handle);
 	      
 	      $ch[$handle] = $handle;
 	    }
-	  
 	  
 	  $replay=False;
 	  $valid=False;
@@ -421,7 +342,7 @@ class Auth_Yubico
 	      if ($info['result'] == CURL_OK) {
 		$str = curl_multi_getcontent($info['handle']);
 
-		if(preg_match("/status=([a-zA-Z0-9_]+)/", $str, $out)) {
+		if (preg_match("/status=([a-zA-Z0-9_]+)/", $str, $out)) {
 		  
 		  $status = $out[1];
 		  $cinfo = curl_getinfo ($info['handle']);

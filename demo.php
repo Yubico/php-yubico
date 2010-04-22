@@ -34,16 +34,19 @@
    $ask_url = 1;
 
    $url = $_REQUEST["url"];
+   $sl = $_REQUEST["sl"];
+   $timeout = $_REQUEST["timeout"];
    $id = $_REQUEST["id"];
    $key = $_REQUEST["key"];
    $otp = $_REQUEST["otp"];
    $https = $_REQUEST["https"];
-
+   $all = $_REQUEST["all"];
+   
    if (!$id || !$otp) {
      $key = "oBVbNt7IZehZGR99rvq8d6RZ1DM=";
    }
    if (!$url) {
-     $url = "api.yubico.com/wsapi/verify";
+     $url = "api.yubico.com/wsapi/2.0/verify,api2.yubico.com/wsapi/2.0/verify,api3.yubico.com/wsapi/2.0/verify,api4.yubico.com/wsapi/2.0/verify,api5.yubico.com/wsapi/2.0/verify";
    }
    if (!$id) {
      $id = "1851";
@@ -51,15 +54,27 @@
    if (!$otp) {
      $otp = "dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh";
    }
+if (!$sl) { $sl = ""; }
+if (!$timeout) { $timeout = ""; }
 
    if ($ask_url) { ?>
 
    <tr>
-   <td><b>URL part:</b></td>
+       <td><b>URL part list (comma separated):</b></td>
    <td><input type=text name=url size=50 value="<?php print $url; ?>"></td>
    </tr>
 
 <?php } ?>
+
+   <tr>
+   <td><b>Sync level (0-100) [%] (optional):</b></td>
+   <td><input type=text name=sl size=10 value="<?php print $sl; ?>"></td>
+   </tr>
+
+   <tr>
+     <td><b>timeout [s] (optional):</b></td>
+   <td><input type=text name=timeout size=10 value="<?php print $timeout; ?>"></td>
+   </tr>
 
    <tr>
    <td><b>Client ID:</b></td>
@@ -82,6 +97,12 @@
    </tr>
 
    <tr>
+   <td><b>Wait for all:</b></td>
+   <td><input type=checkbox name=all value=1 <?php if ($all) { print "checked"; } ?>></td>
+   </tr>
+
+
+   <tr>
    <td colspan=2><input type=submit></td>
    </tr>
 
@@ -90,19 +111,20 @@
   </form>
 
 <?php
-    require_once 'Auth/Yubico.php';
-    $yubi = &new Auth_Yubico($id, $key, $https);
-    if ($ask_url) {
-      $yubi->setURLpart($url);
+   require_once 'Auth/Yubico.php';
+   $yubi = &new Auth_Yubico($id, $key, $https);
+   if ($ask_url) {
+      $urls=explode(",", $url);
+      foreach($urls as $u) $yubi->addURLpart($u);
     }
-    $auth = $yubi->verify($otp);
+   $auth = $yubi->multi_verify($otp, false,$all, $sl, $timeout);
 ?>
 
-  <h2>Client Query</h2>
+  <h2>Last Client Query</h2>
 
 <pre><?php print $yubi->getLastQuery(); ?></pre>
 
-  <h2>Server Response</h2>
+  <h2>Server Responses</h2>
 
 <pre><?php print $yubi->getLastResponse(); ?></pre>
 
