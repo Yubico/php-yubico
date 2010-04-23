@@ -1,6 +1,6 @@
 VERSION=2.0
 PACKAGE=Auth_Yubico
-CODE=Yubico.php package.xml README demo.php
+CODE=COPYING NEWS README Yubico.php package.xml demo.php
 EXAMPLE=example/admin.php example/authenticate.php example/bg.jpg	\
 	example/config.php example/db.sql example/debug.php		\
 	example/greenBG.jpg example/greenGraphic.jpg			\
