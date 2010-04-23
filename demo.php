@@ -117,7 +117,7 @@ if (!$timeout) { $timeout = ""; }
       $urls=explode(",", $url);
       foreach($urls as $u) $yubi->addURLpart($u);
     }
-   $auth = $yubi->multi_verify($otp, false,$all, $sl, $timeout);
+   $auth = $yubi->verify($otp, false,$all, $sl, $timeout);
 ?>
 
   <h2>Last Client Query</h2>
