@@ -82,9 +82,15 @@ class Auth_Yubico
 
 	/**
 	 * Flag whether to use https or not.
-	 * @var string
+	 * @var boolean
 	 */
 	var $_https;
+
+	/**
+	 * Flag whether to verify HTTPS server certificates or not.
+	 * @var boolean
+	 */
+	var $_httpsverify;
 
 	/**
 	 * Constructor
@@ -93,13 +99,16 @@ class Auth_Yubico
 	 * @param    string  The client identity
 	 * @param    string  The client MAC key (optional)
 	 * @param    boolean Flag whether to use https (optional)
+	 * @param    boolean Flag whether to use verify HTTPS server
+	 *                   certificates (optional, default true)
 	 * @access public
 	 */
-	function Auth_Yubico($id, $key = '', $https = 0)
+	function Auth_Yubico($id, $key = '', $https = 0, $httpsverify = 1)
 	{
 		$this->_id =  $id;
 		$this->_key = base64_decode($key);
 		$this->_https = $https;
+		$this->_httpsverify = $httpsverify;
 	}
 
 	/**
@@ -292,7 +301,9 @@ class Auth_Yubico
 	      $handle = curl_init($this->_query);
 	      curl_setopt($handle, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
 	      curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
-	      curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 0);
+	      if (!$this->_httpsverify) {
+		curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 0);
+	      }
 	      curl_setopt($handle, CURLOPT_FAILONERROR, true);
 	      /* If timeout is set, we better apply it here as well
 	         in case the validation server fails to follow it. 

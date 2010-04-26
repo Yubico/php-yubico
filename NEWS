@@ -1,5 +1,7 @@
 * Version 2.1 unreleased
 
+  * Verify server certificates by default when HTTPS is requested.
+
 * Version 2.0 released 2010-04-23
 
   * Support for new replicated server protocol.
