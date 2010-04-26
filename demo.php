@@ -40,6 +40,7 @@
    $key = $_REQUEST["key"];
    $otp = $_REQUEST["otp"];
    $https = $_REQUEST["https"];
+   $httpsverify = $_REQUEST["httpsverify"];
    $wait_for_all = $_REQUEST["wait_for_all"];
 
    if ($ask_url == 0 || !$url) {
