@@ -1,4 +1,4 @@
-* Version 2.1 unreleased
+* Version 2.1 released 2010-04-26
 
   * Verify server certificates by default when HTTPS is requested.
     - New parameter to constructor to disable verification.
