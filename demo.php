@@ -118,11 +118,15 @@
 
   <h2>Last Client Query</h2>
 
-   <p><?php print $yubi->getLastQuery(); ?></p>
+   <pre>
+<?php print str_replace (" ", "\n", $yubi->getLastQuery() . " "); ?>
+   </pre>
 
   <h2>Server Responses</h2>
 
-<pre><?php print $yubi->getLastResponse(); ?></pre>
+   <pre>
+<?php print $yubi->getLastResponse(); ?>
+  </pre>
 
 <?php
 if (PEAR::isError($auth)) {
