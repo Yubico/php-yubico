@@ -49,8 +49,8 @@
    if (!$id || !$otp) { $key = "oBVbNt7IZehZGR99rvq8d6RZ1DM="; }
    if (!$id) { $id = "1851"; }
    if (!$otp) { $otp = "dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh"; }
-   if (!$sl) { $sl = ""; }
-   if (!$timeout) { $timeout = ""; }
+   if (!$sl && $sl != 0) { $sl = ""; }
+   if (!$timeout && $timeout != 0) { $timeout = ""; }
 ?>
 
    <tr>
