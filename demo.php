@@ -97,7 +97,7 @@ if (!$timeout) { $timeout = ""; }
    </tr>
 
    <tr>
-   <td><b>Disable server verification:</b></td>
+   <td><b>Disable certificate verification:</b></td>
    <td><input type=checkbox name=httpsverify value=1 <?php if ($httpsverify) { print "checked"; } ?>></td>
    </tr>
 
