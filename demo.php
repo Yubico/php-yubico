@@ -97,6 +97,11 @@ if (!$timeout) { $timeout = ""; }
    </tr>
 
    <tr>
+   <td><b>Disable server verification:</b></td>
+   <td><input type=checkbox name=httpsverify value=1 <?php if ($httpsverify) { print "checked"; } ?>></td>
+   </tr>
+
+   <tr>
    <td><b>Wait for all:</b></td>
    <td><input type=checkbox name=all value=1 <?php if ($all) { print "checked"; } ?>></td>
    </tr>
@@ -112,12 +117,12 @@ if (!$timeout) { $timeout = ""; }
 
 <?php
    require_once 'Auth/Yubico.php';
-   $yubi = &new Auth_Yubico($id, $key, $https);
+   $yubi = &new Auth_Yubico($id, $key, $https, $httpsverify);
    if ($ask_url) {
       $urls=explode(",", $url);
       foreach($urls as $u) $yubi->addURLpart($u);
     }
-   $auth = $yubi->verify($otp, false,$all, $sl, $timeout);
+   $auth = $yubi->verify($otp, false, $all, $sl, $timeout);
 ?>
 
   <h2>Last Client Query</h2>
