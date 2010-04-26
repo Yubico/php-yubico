@@ -272,11 +272,11 @@ class Auth_Yubico
 	function verify($token, $use_timestamp=null, $wait_for_all=False,
 			$sl=null, $timeout=null)
 	{
+	  /* Construct parameters string */
 	  $ret = $this->parsePasswordOTP($token);
 	  if (!$ret) {
 	    return PEAR::raiseError('Could not parse Yubikey OTP');
 	  }
-	  
 	  $params = array('id'=>$this->_id, 
 			  'otp'=>$ret['otp'],
 			  'nonce'=>md5(uniqid(rand())));
@@ -284,8 +284,6 @@ class Auth_Yubico
 	  if ($use_timestamp) $params['timestamp'] = 1;
 	  if ($sl) $params['sl'] = $sl;
 	  if ($timeout) $params['timeout'] = $timeout;
-	  
-	  /* Construct parameters string */
 	  ksort($params);
 	  foreach($params as $p=>$v) $parameters .= "&" . $p . "=" . $v;
 	  $parameters = ltrim($parameters, "&");
@@ -297,9 +295,9 @@ class Auth_Yubico
 	    $signature = preg_replace('/\+/', '%2B', $signature);
 	    $parameters .= '&h=' . $signature;
 	  }
-	  
+
+	  /* Generate and prepare request. */
 	  $this->_lastquery=null;
-	  $this->_response=null;
 	  $this->URLreset();
 	  $mh = curl_multi_init();
 	  $ch = array();
@@ -313,7 +311,8 @@ class Auth_Yubico
 	      }
 	      $query .= $URLpart . "?" . $parameters;
 
-	      $this->_lastquery .= " " . $query;
+	      if ($this->_lastquery) { $this->_lastquery .= " "; }
+	      $this->_lastquery .= $query;
 	      
 	      $handle = curl_init($query);
 	      curl_setopt($handle, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
@@ -330,7 +329,9 @@ class Auth_Yubico
 	      
 	      $ch[$handle] = $handle;
 	    }
-	  
+
+	  /* Execute and read request. */
+	  $this->_response=null;
 	  $replay=False;
 	  $valid=False;
 	  do {
@@ -338,28 +339,40 @@ class Auth_Yubico
 	    while (($mrc = curl_multi_exec($mh, $active))
 		   == CURLM_CALL_MULTI_PERFORM)
 	      ;
-	    
+
 	    while ($info = curl_multi_info_read($mh)) {
 	      if ($info['result'] == CURL_OK) {
+
+		/* We have a complete response from one server. */
+
 		$str = curl_multi_getcontent($info['handle']);
+		$cinfo = curl_getinfo ($info['handle']);
+		
+		if ($wait_for_all) { # Better debug info
+		  $this->_response .= 'URL=' . $cinfo['url'] ."\n"
+		    . $str . "\n";
+		}
 
 		if (preg_match("/status=([a-zA-Z0-9_]+)/", $str, $out)) {
-		  
 		  $status = $out[1];
-		  $cinfo = curl_getinfo ($info['handle']);
-		  
+
 		  /* 
-		   There are 3 cases.
-		   1. OTP or Nonce values doesn't match and answer is considered neither valid or a replay
-		   2. First signature is verified, then we consider the answer to be a replay or valid depending on the status
-		   3. We consider the answer to be a replay or valid depending on the status directly
-		  */
+		   * There are 3 cases.
+		   *
+		   * 1. OTP or Nonce values doesn't match - ignore
+		   * response.
+		   *
+		   * 2. We have a HMAC key.  If signature is invalid -
+		   * ignore response.  Return if status=OK or
+		   * status=REPLAYED_OTP.
+		   *
+		   * 3. Return if status=OK or status=REPLAYED_OTP.
+		   */
 		  if (!preg_match("/otp=".$params['otp']."/", $str) ||
 		      !preg_match("/nonce=".$params['nonce']."/", $str)) {
-		    /* Case 1. Answer is neither valid or a replay. */
-		    $this->_response .= " OTP or nonce mismatch. status=" . $status;
+		    /* Case 1. Ignore response. */
 		  } 
-		  elseif($this->_key <> "") {
+		  elseif ($this->_key <> "") {
 		    /* Case 2. Verify signature first */
 		    $rows = split("\r\n", $str);
 		    $response=array();
@@ -379,37 +392,36 @@ class Auth_Yubico
 			$check = $check . $param . '=' . $response[$param];
 		      }
 		    }
-		    
 
-		    $checksignature = base64_encode(hash_hmac('sha1', utf8_encode($check), $this->_key, true));
+		    $checksignature =
+		      base64_encode(hash_hmac('sha1', utf8_encode($check),
+					      $this->_key, true));
 
 		    if($response[h] == $checksignature) {
 		      if ($status == 'REPLAYED_OTP') {
+			if (!$wait_for_all) { $this->_response = $str; }
 			$replay=True;
 		      } 
 		      if ($status == 'OK') {
+			if (!$wait_for_all) { $this->_response = $str; }
 			$valid=True;
 		      }
-		      $this->_response .= " status=" . $status;
-		    } else {
-		      $this->_response .= " Signature mismatch. status=" . $status ;
 		    }
 		  } else {
 		    /* Case 3. We check the status directly */
 		    if ($status == 'REPLAYED_OTP') {
+		      if (!$wait_for_all) { $this->_response = $str; }
 		      $replay=True;
 		    } 
 		    if ($status == 'OK') {
+		      if (!$wait_for_all) { $this->_response = $str; }
 		      $valid=True;
 		    }
-		    $this->_response .= " status=" . $status;
 		  }
-		  $this->_response .= ' for url ' . $cinfo['url'] ."\n";
 		}
 		if (!$wait_for_all && ($valid || $replay)) 
 		  {
-		    
-		    /* We have a valid answer or a replay, loop should be ended here */
+		    /* We have status=OK or status=REPLAYED_OTP, return. */
 		    foreach ($ch as $h) {
 		      curl_multi_remove_handle($mh, $h);
 		      curl_close($h);
@@ -427,7 +439,12 @@ class Auth_Yubico
 	      curl_multi_select($mh);
 	    }
 	  } while ($active);
-	  
+
+	  /* Typically this is only reached for wait_for_all=true or
+	   * when the timeout is reached and there is no
+	   * OK/REPLAYED_REQUEST answer (think firewall).
+	   */
+
 	  foreach ($ch as $h) {
 	    curl_multi_remove_handle ($mh, $h);
 	    curl_close ($h);
