@@ -50,15 +50,16 @@
    if (!$otp) { $otp = "dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh"; }
    if (!$sl) { $sl = ""; }
    if (!$timeout) { $timeout = ""; }
+?>
 
    <tr>
-       <td><b>URL part list (comma separated):</b></td>
-       <td><input type=text name=url size=50 value="<?php print $url; ?>" <?php if ($ask_url == 0) { print " readonly"; } ?>></td>
+     <td><b>URL part list (comma separated):</b></td>
+     <td><input type=text name=url size=50 value="<?php print $url; ?>" <?php if ($ask_url == 0) { print " readonly"; } ?>></td>
    </tr>
 
    <tr>
-   <td><b>Sync level (0-100) [%] (optional):</b></td>
-   <td><input type=text name=sl size=10 value="<?php print $sl; ?>"></td>
+     <td><b>Sync level (0-100) [%] (optional):</b></td>
+     <td><input type=text name=sl size=10 value="<?php print $sl; ?>"></td>
    </tr>
 
    <tr>
@@ -67,37 +68,37 @@
    </tr>
 
    <tr>
-   <td><b>Client ID:</b></td>
-   <td><input type=text name=id size=10 value="<?php print $id; ?>"></td>
+     <td><b>Client ID:</b></td>
+     <td><input type=text name=id size=10 value="<?php print $id; ?>"></td>
    </tr>
 
    <tr>
-   <td><b>Key (base64):</b></td>
-   <td><input type=text name=key size=30 value="<?php print $key; ?>"></td>
+     <td><b>Key (base64):</b></td>
+     <td><input type=text name=key size=30 value="<?php print $key; ?>"></td>
    </tr>
 
    <tr>
-   <td><b>Use HTTPS:</b></td>
-   <td><input type=checkbox name=https value=1 <?php if ($https) { print "checked"; } ?>></td>
+     <td><b>Use HTTPS:</b></td>
+     <td><input type=checkbox name=https value=1 <?php if ($https) { print "checked"; } ?>></td>
    </tr>
 
    <tr>
-   <td><b>Disable certificate verification:</b></td>
-   <td><input type=checkbox name=httpsverify value=1 <?php if ($httpsverify) { print "checked"; } ?>></td>
+     <td><b>Disable certificate verification:</b></td>
+     <td><input type=checkbox name=httpsverify value=1 <?php if ($httpsverify) { print "checked"; } ?>></td>
    </tr>
 
    <tr>
-   <td><b>Wait for all:</b></td>
-   <td><input type=checkbox name=all value=1 <?php if ($wait_for_all) { print "checked"; } ?>></td>
+     <td><b>Wait for all:</b></td>
+     <td><input type=checkbox name=all value=1 <?php if ($wait_for_all) { print "checked"; } ?>></td>
    </tr>
 
    <tr>
-   <td><b>OTP:</b></td>
-   <td><input type=text name=otp size=30 value="<?php print $otp; ?>"></td>
+     <td><b>OTP:</b></td>
+     <td><input type=text name=otp size=30 value="<?php print $otp; ?>"></td>
    </tr>
 
    <tr>
-   <td colspan=2><input type=submit></td>
+     <td colspan=2><input type=submit></td>
    </tr>
 
    </table>
