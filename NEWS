@@ -1,6 +1,13 @@
 * Version 2.1 unreleased
 
   * Verify server certificates by default when HTTPS is requested.
+    - New parameter to constructor to disable verification.
+
+  * Improve last request/response messages, for debugging purposes.
+
+  * Disable API input by default in demo.php.
+
+  * API doc fixes.
 
 * Version 2.0 released 2010-04-23
 
