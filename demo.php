@@ -31,7 +31,7 @@
    # place this script on the public Internet.  Set $ask_url to 1 on
    # the next line to make it work, for local testing purposes only!
 
-   $ask_url = 1;
+   $ask_url = 0;
 
    $url = $_REQUEST["url"];
    $sl = $_REQUEST["sl"];
@@ -40,31 +40,21 @@
    $key = $_REQUEST["key"];
    $otp = $_REQUEST["otp"];
    $https = $_REQUEST["https"];
-   $all = $_REQUEST["all"];
-   
-   if (!$id || !$otp) {
-     $key = "oBVbNt7IZehZGR99rvq8d6RZ1DM=";
-   }
-   if (!$url) {
-     $url = "api.yubico.com/wsapi/2.0/verify,api2.yubico.com/wsapi/2.0/verify,api3.yubico.com/wsapi/2.0/verify,api4.yubico.com/wsapi/2.0/verify,api5.yubico.com/wsapi/2.0/verify";
-   }
-   if (!$id) {
-     $id = "1851";
-   }
-   if (!$otp) {
-     $otp = "dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh";
-   }
-if (!$sl) { $sl = ""; }
-if (!$timeout) { $timeout = ""; }
+   $wait_for_all = $_REQUEST["wait_for_all"];
 
-   if ($ask_url) { ?>
+   if ($ask_url == 0 || !$url) {
+     $url = "api.yubico.com/wsapi/2.0/verify,api2.yubico.com/wsapi/2.0/verify,api3.yubico.com/wsapi/2.0/verify,api4.yubico.com/wsapi/2.0/verify,api5.yubico.com/wsapi/2.0/verify";
+    }
+   if (!$id || !$otp) { $key = "oBVbNt7IZehZGR99rvq8d6RZ1DM="; }
+   if (!$id) { $id = "1851"; }
+   if (!$otp) { $otp = "dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh"; }
+   if (!$sl) { $sl = ""; }
+   if (!$timeout) { $timeout = ""; }
 
    <tr>
        <td><b>URL part list (comma separated):</b></td>
-   <td><input type=text name=url size=50 value="<?php print $url; ?>"></td>
+       <td><input type=text name=url size=50 value="<?php print $url; ?>" <?php if ($ask_url == 0) { print " readonly"; } ?>></td>
    </tr>
-
-<?php } ?>
 
    <tr>
    <td><b>Sync level (0-100) [%] (optional):</b></td>
@@ -73,7 +63,7 @@ if (!$timeout) { $timeout = ""; }
 
    <tr>
      <td><b>timeout [s] (optional):</b></td>
-   <td><input type=text name=timeout size=10 value="<?php print $timeout; ?>"></td>
+     <td><input type=text name=timeout size=10 value="<?php print $timeout; ?>"></td>
    </tr>
 
    <tr>
@@ -84,11 +74,6 @@ if (!$timeout) { $timeout = ""; }
    <tr>
    <td><b>Key (base64):</b></td>
    <td><input type=text name=key size=30 value="<?php print $key; ?>"></td>
-   </tr>
-
-   <tr>
-   <td><b>OTP:</b></td>
-   <td><input type=text name=otp size=30 value="<?php print $otp; ?>"></td>
    </tr>
 
    <tr>
@@ -103,9 +88,13 @@ if (!$timeout) { $timeout = ""; }
 
    <tr>
    <td><b>Wait for all:</b></td>
-   <td><input type=checkbox name=all value=1 <?php if ($all) { print "checked"; } ?>></td>
+   <td><input type=checkbox name=all value=1 <?php if ($wait_for_all) { print "checked"; } ?>></td>
    </tr>
 
+   <tr>
+   <td><b>OTP:</b></td>
+   <td><input type=text name=otp size=30 value="<?php print $otp; ?>"></td>
+   </tr>
 
    <tr>
    <td colspan=2><input type=submit></td>
@@ -122,7 +111,7 @@ if (!$timeout) { $timeout = ""; }
       $urls=explode(",", $url);
       foreach($urls as $u) $yubi->addURLpart($u);
     }
-   $auth = $yubi->verify($otp, false, $all, $sl, $timeout);
+   $auth = $yubi->verify($otp, false, $wait_for_all, $sl, $timeout);
 ?>
 
   <h2>Last Client Query</h2>
