@@ -96,11 +96,12 @@ class Auth_Yubico
 	 * Constructor
 	 *
 	 * Sets up the object
-	 * @param    string  The client identity
-	 * @param    string  The client MAC key (optional)
-	 * @param    boolean Flag whether to use https (optional)
-	 * @param    boolean Flag whether to use verify HTTPS server
-	 *                   certificates (optional, default true)
+	 * @param    string  $id     The client identity
+	 * @param    string  $key    The client MAC key (optional)
+	 * @param    boolean $https  Flag whether to use https (optional)
+	 * @param    boolean $httpsverify  Flag whether to use verify HTTPS
+	 *                                 server certificates (optional,
+	 *                                 default true)
 	 * @access public
 	 */
 	function Auth_Yubico($id, $key = '', $https = 0, $httpsverify = 1)
@@ -115,7 +116,7 @@ class Auth_Yubico
 	 * Specify to use a different URL part for verification.
 	 * The default is "api.yubico.com/wsapi/verify".
 	 *
-	 * @param  string    New server URL part to use
+	 * @param  string $url  New server URL part to use
 	 * @access public
 	 */
 	function setURLpart($url)
@@ -126,7 +127,7 @@ class Auth_Yubico
 	/**
 	 * Get URL part to use for validation.
 	 *
-	 * @return string		Server URL part
+	 * @return string  Server URL part
 	 * @access public
 	 */
 	function getURLpart()
@@ -142,7 +143,7 @@ class Auth_Yubico
 	/**
 	 * Get next URL part from list to use for validation.
 	 *
-	 * @mixed string with URL part of false if no more URLs in list
+	 * @return mixed string with URL part of false if no more URLs in list
 	 * @access public
 	 */
 	function getNextURLpart()
@@ -168,6 +169,11 @@ class Auth_Yubico
 	  $this->_url_index=0;
 	}
 
+	/**
+	 * Add another URLpart.
+	 *
+	 * @access public
+	 */
 	function addURLpart($URLpart) 
 	{
 	  $this->_url_list[]=$URLpart;
@@ -176,7 +182,7 @@ class Auth_Yubico
 	/**
 	 * Return the last query sent to the server, if any.
 	 *
-	 * @return string		Output from server
+	 * @return string  Output from server
 	 * @access public
 	 */
 	function getLastQuery()
@@ -187,7 +193,7 @@ class Auth_Yubico
 	/**
 	 * Return the last data received from the server, if any.
 	 *
-	 * @return string		Output from server
+	 * @return string  Output from server
 	 * @access public
 	 */
 	function getLastResponse()
@@ -226,8 +232,9 @@ class Auth_Yubico
 	 *
 	 * example: getParameters("timestamp", "sessioncounter", "sessionuse");
 	 *
-	 * @param  array      Array with strings representing parameters to parse
-	 * @return array      parameter array from last response
+	 * @param  array @parameters  Array with strings representing
+	 *                            parameters to parse
+	 * @return array  parameter array from last response
 	 * @access public
 	 */
 	function getParameters($parameters)
@@ -250,12 +257,20 @@ class Auth_Yubico
 	 * Protocol specification 2.0 is used to construct validation requests
 	 *
 	 * @param string $token        Yubico OTP
-	 * @param int $use_timestamp   1=>send request with &timestamp=1 to get timestamp
-	 *                             and session information in the response
+	 * @param int $use_timestamp   1=>send request with &timestamp=1 to
+	 *                             get timestamp and session information
+	 *                             in the response
+	 * @param boolean $wait_for_all  If true, wait until all
+	 *                               servers responds (for debugging)
+	 * @param string $sl           Sync level in percentage between 0
+	 *                             and 100 or "fast" or "secure".
+	 * @param int $timeout         Max number of seconds to wait
+	 *                             for responses
 	 * @return mixed               PEAR error on error, true otherwise
 	 * @access public
 	 */
-	function verify($token, $use_timestamp=null, $wait_for_all=False,$sl=null, $timeout=null)
+	function verify($token, $use_timestamp=null, $wait_for_all=False,
+			$sl=null, $timeout=null)
 	{
 	  $ret = $this->parsePasswordOTP($token);
 	  if (!$ret) {
@@ -277,7 +292,8 @@ class Auth_Yubico
 	  
 	  /* Generate signature. */
 	  if($this->_key <> "") {
-	    $signature = base64_encode(hash_hmac('sha1', $parameters, $this->_key, true));
+	    $signature = base64_encode(hash_hmac('sha1', $parameters,
+						 $this->_key, true));
 	    $signature = preg_replace('/\+/', '%2B', $signature);
 	    $parameters .= '&h=' . $signature;
 	  }
@@ -317,7 +333,9 @@ class Auth_Yubico
 	  $replay=False;
 	  $valid=False;
 	  do {
-	    while (($mrc = curl_multi_exec($mh, $active)) == CURLM_CALL_MULTI_PERFORM)
+	    /* Let curl do its work. */
+	    while (($mrc = curl_multi_exec($mh, $active))
+		   == CURLM_CALL_MULTI_PERFORM)
 	      ;
 	    
 	    while ($info = curl_multi_info_read($mh)) {
