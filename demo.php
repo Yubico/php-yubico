@@ -89,7 +89,7 @@
 
    <tr>
      <td><b>Wait for all:</b></td>
-     <td><input type=checkbox name=all value=1 <?php if ($wait_for_all) { print "checked"; } ?>></td>
+     <td><input type=checkbox name=wait_for_all value=1 <?php if ($wait_for_all) { print "checked"; } ?>></td>
    </tr>
 
    <tr>
