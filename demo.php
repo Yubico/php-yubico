@@ -118,7 +118,7 @@
 
   <h2>Last Client Query</h2>
 
-<pre><?php print $yubi->getLastQuery(); ?></pre>
+   <p><?php print $yubi->getLastQuery(); ?></p>
 
   <h2>Server Responses</h2>
 
