@@ -69,10 +69,10 @@ class Auth_Yubico
 	var $_url_index;
 
 	/**
-	 * Query to server
+	 * Last query to server
 	 * @var string
 	 */
-	var $_query;
+	var $_lastquery;
 
 	/**
 	 * Response from server
@@ -182,12 +182,12 @@ class Auth_Yubico
 	/**
 	 * Return the last query sent to the server, if any.
 	 *
-	 * @return string  Output from server
+	 * @return string  Request to server
 	 * @access public
 	 */
 	function getLastQuery()
 	{
-		return $this->_query;
+		return $this->_lastquery;
 	}
 
 	/**
@@ -298,6 +298,7 @@ class Auth_Yubico
 	    $parameters .= '&h=' . $signature;
 	  }
 	  
+	  $this->_lastquery=null;
 	  $this->_response=null;
 	  $this->URLreset();
 	  $mh = curl_multi_init();
@@ -306,15 +307,15 @@ class Auth_Yubico
 	    {
 	      /* Support https. */
 	      if ($this->_https) {
-		$this->_query = "https://";
+		$query = "https://";
 	      } else {
-		$this->_query = "http://";
+		$query = "http://";
 	      }
-	      $this->_query .= $URLpart;
-	      $this->_query .= "?";
-	      $this->_query .= $parameters;
+	      $query .= $URLpart . "?" . $parameters;
+
+	      $this->_lastquery .= " " . $query;
 	      
-	      $handle = curl_init($this->_query);
+	      $handle = curl_init($query);
 	      curl_setopt($handle, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
 	      curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
 	      if (!$this->_httpsverify) {
