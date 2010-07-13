@@ -1,4 +1,5 @@
 <?php
+        require_once 'Modhex.php';
 	print '<p><table  style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px;" width="100%">';
 
 	print "<tr><td colspan=2><b>HTML fields</b></td></tr>\n";
@@ -21,7 +22,9 @@
 	!$password or
 	 print "<tr><td width=70><b>password</b></td><td>$password</td></tr>\n";
 	!$identity or
-	 print "<tr><td width=70><b>identity</b></td><td>$identity</td></tr>\n";
+	 print "<tr><td width=70><b>identity</b></td><td>$identity" .
+               "&nbsp;&nbsp;&nbsp; <b>decimal&nbsp;&nbsp;</b>&nbsp;" .  base_convert(b64ToHex(modhexToB64($identity)),16,10) . 
+	       "</td></tr>\n";
 	!$realname or
 	 print "<tr><td width=70><b>db_realname</b></td><td>$realname</td></tr>\n";
 	!$db_password or
