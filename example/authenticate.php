@@ -35,7 +35,7 @@ $identity = $ret['prefix'];
 $key = $ret['otp'];
 
 # Check OTP
-$yubi = &new Auth_Yubico($CFG[__CLIENT_ID__], $CFG[__CLIENT_KEY__]);
+$yubi = new Auth_Yubico($CFG[__CLIENT_ID__], $CFG[__CLIENT_KEY__]);
 $auth = $yubi->verify($key);
 if (PEAR::isError($auth)) {
   $authenticated = 1;

@@ -1,3 +1,11 @@
+* Version 2.2 unreleased
+
+  * Don't use PHP 5.3 deprecated features.
+
+    - Replace use of 'split' with 'explode'.
+
+    - Replace use of '&new' with 'new'.
+
 * Version 2.1 released 2010-04-26
 
   * Verify server certificates by default when HTTPS is requested.

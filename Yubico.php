@@ -22,7 +22,7 @@ require_once 'PEAR.php';
  * $otp = "ccbbddeertkrctjkkcglfndnlihhnvekchkcctif";
  *
  * # Generate a new id+key from https://api.yubico.com/get-api-key/
- * $yubi = &new Auth_Yubico('42', 'FOOBAR=');
+ * $yubi = new Auth_Yubico('42', 'FOOBAR=');
  * $auth = $yubi->verify($otp);
  * if (PEAR::isError($auth)) {
  *    print "<p>Authentication failed: " . $auth->getMessage();
@@ -374,12 +374,12 @@ class Auth_Yubico
 		  } 
 		  elseif ($this->_key <> "") {
 		    /* Case 2. Verify signature first */
-		    $rows = split("\r\n", $str);
+		    $rows = explode("\r\n", $str);
 		    $response=array();
 		    while (list($key, $val) = each($rows)) {
 		      /* = is also used in BASE64 encoding so we only replace the first = by # which is not used in BASE64 */
 		      $val = preg_replace('/=/', '#', $val, 1);
-		      $row = split("#", $val);
+		      $row = explode("#", $val);
 		      $response[$row[0]] = $row[1];
 		    }
 		    
