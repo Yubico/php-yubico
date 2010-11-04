@@ -20,7 +20,13 @@ The license for php-yubico is the revised BSD license.
 == Installation ==
 
 Make sure your PHP installation supports curl, and that you have
-installed PEAR.  Install the component by invoking:
+installed PEAR.  On Debian/Ubuntu systems:
+
+{{{
+apt-get install libapache2-mod-php5 php5-curl php-pear
+}}}
+
+Install the component by invoking:
 
 {{{
   wget http://php-yubico.googlecode.com/files/Auth_Yubico-2.2.tgz
