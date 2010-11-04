@@ -64,7 +64,7 @@ http://code.google.com/p/php-yubico/source/browse/trunk/demo.php
 
 To try the page, you may access it here:
 
-http://www.yubico.com/demo/demo.php
+http://demo.yubico.com/php-yubico/demo.php 
 
 There is also a complete example site to demo one-factor and
 two-factor mode.  It requires a database to store the username and
@@ -75,7 +75,7 @@ http://code.google.com/p/php-yubico/source/browse/trunk/example/
 
 To try the page, you may access it here:
 
-http://www.yubico.com/demo/
+http://demo.yubico.com/php-yubico/
 
 == Feedback ==
 
