@@ -77,6 +77,16 @@ To try the page, you may access it here:
 
 http://demo.yubico.com/php-yubico/
 
+Included is also a web page illustrating how to work with the modhex
+encoding.  The code is available here:
+
+http://code.google.com/p/php-yubico/source/browse/trunk/example/Modhex.php
+http://code.google.com/p/php-yubico/source/browse/trunk/example/Modhex_Calculator.php
+
+It may be accessed here:
+
+http://demo.yubico.com/php-yubico/Modhex_Calculator.php
+
 == Feedback ==
 
 If you want to discuss anything related to the Yubico PHP class,
