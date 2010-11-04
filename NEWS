@@ -1,4 +1,4 @@
-* Version 2.2 unreleased
+* Version 2.2 released 2010-11-04
 
   * Don't use PHP 5.3 deprecated features.
 
