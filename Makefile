@@ -40,7 +40,7 @@ clean:
 	rm -rf $(PACKAGE)-$(VERSION)
 
 PROJECT=php-yubico
-USER=simon75j
+USER=simon@yubico.com
 KEYID=B9156397
 
 release:
@@ -50,6 +50,8 @@ release:
 	svn copy https://$(PROJECT).googlecode.com/svn/trunk/ \
 	 https://$(PROJECT).googlecode.com/svn/tags/$(PACKAGE)-$(VERSION) \
 	 -m "Tagging the $(VERSION) release of the $(PACKAGE) project."
+	mkdir -p ../releases/$(PACKAGE)/ && \
+		cp -v $(PACKAGE)-$(VERSION).tgz* ../releases/$(PACKAGE)/
 	googlecode_upload.py -s "OpenPGP signature for $(PACKAGE) $(VERSION)." \
 	 -p $(PROJECT) -u $(USER) $(PACKAGE)-$(VERSION).tgz.sig
 	googlecode_upload.py -s "Auth_Yubico $(VERSION)." \
