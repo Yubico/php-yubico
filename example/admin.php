@@ -45,12 +45,12 @@ if ($authenticated == 0) {
 
   $query  = sprintf ("DELETE FROM demoserver WHERE id='%s'",
 		     pg_escape_string ($identity));
-  pg_query($query) or die('Error, admin delete failed: ' . pg_error());
+  pg_query($query) or die('Error, admin delete failed: ' . pg_last_error());
   $query  = sprintf ("INSERT INTO demoserver (id, username, password) values ('%s', '%s', '%s')",
 		     pg_escape_string ($identity),
 		     pg_escape_string ($username),
 		     pg_escape_string ($password));
-  pg_query($query) or die('Error, admin insert failed: ' . pg_error());
+  pg_query($query) or die('Error, admin insert failed: ' . pg_last_error());
  ?>
 
 		<h1 class="ok">Congratulations <?php if ($realname) { print "$realname!"; }?></h1>
