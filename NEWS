@@ -6,6 +6,8 @@
 
     - Replace use of '&new' with 'new'.
 
+  * Improve documentation.
+
 * Version 2.1 released 2010-04-26
 
   * Verify server certificates by default when HTTPS is requested.
