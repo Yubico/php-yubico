@@ -74,7 +74,8 @@ function b64ToHex($b64_str) {
 	$a = str_split($tid);
 	for ($i=0; $i < count($a); $i++) {
 		//$s .= zeropad(dechex(ord($a[$i])));
-		$s .= dechex(ord($a[$i]));
+		//$s .= dechex(ord($a[$i]));
+		$s .= sprintf("%02x", ord($a[$i]));
 		//echo ' '.strval($s);
 	}
 	return $s;
@@ -82,9 +83,13 @@ function b64ToHex($b64_str) {
 
 function hexToB64($hex_str) {
 	$s = '';
+	if((strlen($hex_str) % 2) == 1) {
+		$hex_str = '0' . $hex_str;
+	}
 	$a = str_split($hex_str, 2);
+	
 	for ($i=0; $i < count($a); $i++) {
-		$s .= chr(hexdec($a[$i]));	
+		$s .= chr(hexdec($a[$i]));
 		//echo '? '.strval($s).' :: '.$a[$i];
 	}
 	return base64_encode($s);
