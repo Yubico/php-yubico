@@ -1,3 +1,8 @@
+* Version 2.3 unreleased
+
+  * Fix PHP warnings.  Tiny patch from Patrick MONNERAT
+    <patrick.monnerat@datasphere.ch>.
+
 * Version 2.2 released 2010-11-04
 
   * Don't use PHP 5.3 deprecated features.

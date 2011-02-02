@@ -285,6 +285,7 @@ class Auth_Yubico
 	  if ($sl) $params['sl'] = $sl;
 	  if ($timeout) $params['timeout'] = $timeout;
 	  ksort($params);
+	  $parameters = '';
 	  foreach($params as $p=>$v) $parameters .= "&" . $p . "=" . $v;
 	  $parameters = ltrim($parameters, "&");
 	  
@@ -341,7 +342,7 @@ class Auth_Yubico
 	      ;
 
 	    while ($info = curl_multi_info_read($mh)) {
-	      if ($info['result'] == CURL_OK) {
+	      if ($info['result'] == CURLE_OK) {
 
 		/* We have a complete response from one server. */
 
