@@ -40,10 +40,15 @@ clean:
 	rm -rf $(PACKAGE)-$(VERSION)
 
 PROJECT=php-yubico
-USER=simon@yubico.com
-KEYID=B9156397
 
 release:
+	@if test -z "$(USER)" || test -z "$(KEYID)"; then \
+		echo "Try this instead:"; \
+		echo "  make release USER=[GOOGLEUSERNAME] KEYID=[PGPKEYID]"; \
+		echo "For example:"; \
+		echo "  make release USER=simon@yubico.com KEYID=2117364A"; \
+		exit 1; \
+	fi
 	make
 	gpg --detach-sign --default-key $(KEYID) $(PACKAGE)-$(VERSION).tgz
 	gpg --verify $(PACKAGE)-$(VERSION).tgz.sig
