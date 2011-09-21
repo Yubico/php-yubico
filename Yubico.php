@@ -375,7 +375,7 @@ class Auth_Yubico
 		  } 
 		  elseif ($this->_key <> "") {
 		    /* Case 2. Verify signature first */
-		    $rows = explode("\r\n", $str);
+		    $rows = explode("\r\n", trim($str));
 		    $response=array();
 		    while (list($key, $val) = each($rows)) {
 		      /* = is also used in BASE64 encoding so we only replace the first = by # which is not used in BASE64 */
