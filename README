@@ -29,8 +29,8 @@ apt-get install libapache2-mod-php5 php5-curl php-pear
 Install the component by invoking:
 
 {{{
-  wget http://php-yubico.googlecode.com/files/Auth_Yubico-2.3.tgz
-  pear install Auth_Yubico-2.3.tgz
+  wget http://php-yubico.googlecode.com/files/Auth_Yubico-2.4.tgz
+  pear install Auth_Yubico-2.4.tgz
 }}}
 
 == Example usage ==
