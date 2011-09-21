@@ -5,7 +5,7 @@
    * @category    Auth
    * @package     Auth_Yubico
    * @author      Simon Josefsson <simon@yubico.com>, Olov Danielson <olov@yubico.com>
-   * @copyright   2007, 2008, 2009, 2010 Yubico AB
+   * @copyright   2007, 2008, 2009, 2010, 2011 Yubico AB
    * @license     http://opensource.org/licenses/bsd-license.php New BSD License
    * @version     2.0
    * @link        http://www.yubico.com/
@@ -388,7 +388,7 @@ class Auth_Yubico
 		    sort($parameters);
 		    $check=Null;
 		    foreach ($parameters as $param) {
-		      if ($response[$param]!=null) {
+		      if (array_key_exists($param, $response)) {
 			if ($check) $check = $check . '&';
 			$check = $check . $param . '=' . $response[$param];
 		      }
@@ -398,7 +398,7 @@ class Auth_Yubico
 		      base64_encode(hash_hmac('sha1', utf8_encode($check),
 					      $this->_key, true));
 
-		    if($response[h] == $checksignature) {
+		    if($response['h'] == $checksignature) {
 		      if ($status == 'REPLAYED_OTP') {
 			if (!$wait_for_all) { $this->_response = $str; }
 			$replay=True;

@@ -1,3 +1,8 @@
+* Version 2.4 unreleased
+
+  * Fix PHP warnings.  Tiny patch from Simon Buckle
+    <simon.buckle@gmail.com>.
+
 * Version 2.3 released 2011-02-02
 
   * Fix PHP warnings.  Tiny patch from Patrick MONNERAT
