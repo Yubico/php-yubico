@@ -15,7 +15,10 @@ The development community is co-ordinated via Google Code:
 
   http://code.google.com/p/php-yubico/
 
-The license for php-yubico is the revised BSD license.
+The project is licensed under a BSD license.  See the file COPYING for
+exact wording.  For any copyright year range specified as YYYY-ZZZZ in
+this package note that the range specifies every single year in that
+closed interval.
 
 == Installation ==
 
