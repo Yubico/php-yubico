@@ -22,7 +22,7 @@
 	  <div id="container">
 	  
 		<div id="logoArea">
-           <img src="yubicoLogo.gif" alt="yubicoLogo" width="150" height="75"/>
+           <img src="yubicoLogo.jpg" alt="Yubico Logo" width="150" height="75"/>
 		</div>
 		
 		<div id="greenBarContent">
