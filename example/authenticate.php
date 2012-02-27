@@ -9,7 +9,7 @@ $key = $_REQUEST["key"];
 if (isset($_REQUEST["passwordkey"])) {
   $passwordkey = $_REQUEST["passwordkey"];
 } else {
-  $passwordkey "";
+  $passwordkey = "";
 }
 
 # Quit early on no input
