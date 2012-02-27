@@ -8,6 +8,8 @@ $mode = $_REQUEST["mode"];
 $key = $_REQUEST["key"];
 if (isset($_REQUEST["passwordkey"])) {
   $passwordkey = $_REQUEST["passwordkey"];
+} else {
+  $passwordkey "";
 }
 
 # Quit early on no input
