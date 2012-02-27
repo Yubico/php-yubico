@@ -6,7 +6,9 @@ $username = $_REQUEST["username"];
 $password = $_REQUEST["password"];
 $mode = $_REQUEST["mode"];
 $key = $_REQUEST["key"];
-$passwordkey = $_REQUEST["passwordkey"];
+if (isset($_REQUEST["passwordkey"])) {
+  $passwordkey = $_REQUEST["passwordkey"];
+}
 
 # Quit early on no input
 if (!$key && !$passwordkey) {
@@ -35,7 +37,7 @@ $identity = $ret['prefix'];
 $key = $ret['otp'];
 
 # Check OTP
-$yubi = new Auth_Yubico($CFG[__CLIENT_ID__], $CFG[__CLIENT_KEY__]);
+$yubi = new Auth_Yubico($CFG['__CLIENT_ID__'], $CFG['__CLIENT_KEY__']);
 $auth = $yubi->verify($key);
 if (PEAR::isError($auth)) {
   $authenticated = 1;
@@ -45,7 +47,7 @@ if (PEAR::isError($auth)) {
  }
 
 # Fetch realname
-$dbconn = pg_connect($CFG[__PGDB__])
+$dbconn = pg_connect($CFG['__PGDB__'])
   or error_log('Could not connect: ' . pg_last_error());
 if (!$dbconn) {
   $authenticated = 2;
