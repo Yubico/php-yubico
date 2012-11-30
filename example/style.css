@@ -5,7 +5,7 @@
 		left:0px;
 		width:100%;
 		height:96px;
-		background-color:#73bb35;
+		background-color:#8cc041;
 		z-index:-1;
 		}
 		
@@ -19,13 +19,13 @@
 		#yubicoLogo{
 		
 		font-size:32px;
-		color:#73bb35;
+		color:#8cc041;
 		font-weight:bold;
 		
 		}
 		
 		#tagline{
-		color:#73bb35;
+		color:#8cc041;
 		font-size:10px;
 		margin-left:55px;
 		float:left;
@@ -68,7 +68,7 @@
 		}
 		
 		#bottomContent{
-		border:solid 7px #73bb35;
+		border:solid 7px #8cc041;
 		padding:9px;
 		float:left;
 		width:100%;
@@ -76,7 +76,7 @@
 		}
 		
 		#bottomContent a{
-		color:#73bb35;
+		color:#8cc041;
 		font-size:12px;
 		}
 		.med{
