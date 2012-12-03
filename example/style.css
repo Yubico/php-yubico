@@ -88,6 +88,12 @@
 		font-size: 13px;
 		}
 		
+		#linkBox {
+		background-image: url('img_press.jpg');
+		background-repeat: no-repeat;
+		background-position: center left;
+		padding-left: 140px;
+		}
 		
 		input{
 		width:200px;

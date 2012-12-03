@@ -1,27 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
-		
+
 	<style type="text/css">
 	<!--
 	-->
 	</style>
 </head>
-<body>
+<body onLoad="document.login.key.focus();">
 	  <div id="stripe">
 	  &nbsp;
 	  </div>
-	  	
+
 	  <div id="container">
 		<div id="logoArea">
            <img src="yubicoLogo.jpg" alt="Yubico Logo" width="150" height="75"/>
 		</div>
-		
+
 		<div id="greenBarContent">
 
 			<div id="greenBarImage">
@@ -46,20 +45,33 @@
 			Yubikey sends your unique ID and a time variant pass code to the
 			server.</p>
 
-			<p>&raquo; <a href="http://www.yubico.com/">
-			For more information please visit Yubico.com</a></p>
+			<form name="login" action="one_factor.php" method="post" style="border: 1px solid #e5e5e5; background-color: #f1f1f1; padding: 10px; margin: 0px; font-size:12px;" onSubmit="key.value = (key.value).toLowerCase(); return true;">
+			<table border="0" cellspacing="0" cellpadding="0" width="100%">
+				<tr>
+					<td>
+						<b>YubiKey</b>
+					</td>
+					<td>
+						<input autocomplete="off" type="text" name="key" class="yubiKeyInput">
+					</td>
+				</tr>
+			</table>
+			</form>
+			<br />
+			<br />
 
-			<div style="float: left; width: 130">
-			  <img src="img_press.jpg" alt="Yubikey usage" />
-			</div>
-
-			<div style="float: left; width: 400px; padding-left: 15px;">
+			<div id="linkBox">
 			  <h4>Test three different authentication modes </h4>
 			  &raquo; <a href="one_factor.php">One-factor Yubikey only</a><br />
 			  &raquo; <a href="two_factor.php">Two-factor Password + Yubikey</a> <br />
 			  &raquo; <a href="two_factor_legacy.php">Two-factor legacy Username + password + Yubikey</a> <br />
 			  &raquo; <a href="admin.php">Set username and password for this demo</a><br />
 			</div>
+
+			<br />
+			<br />
+			<p>&raquo; <a href="http://www.yubico.com/">For more information please visit Yubico.com</a></p>
+			<br />
 		</div>
 	</div>
 </body>
