@@ -37,7 +37,7 @@ if (!$ret) {
   return;
 }
 
-$identity = $ret['prefix'];
+$identity = htmlspecialchars($ret['prefix']);
 $key = htmlspecialchars($ret['otp']);
 
 # Check OTP
