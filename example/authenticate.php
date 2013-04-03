@@ -2,10 +2,10 @@
 require_once 'Auth/Yubico.php';
 include "config.php";
 
-$username = $_REQUEST["username"];
+$username = htmlspecialchars($_REQUEST["username"]);
 $password = $_REQUEST["password"];
-$mode = $_REQUEST["mode"];
-$key = $_REQUEST["key"];
+$mode = htmlspecialchars($_REQUEST["mode"]);
+$key = htmlspecialchars($_REQUEST["key"]);
 if (isset($_REQUEST["passwordkey"])) {
   $passwordkey = $_REQUEST["passwordkey"];
 } else {
@@ -30,13 +30,15 @@ if ($passwordkey) {
   $ret = Auth_Yubico::parsePasswordOTP($key);
 }
 
+$passwordkey = htmlspecialchars($passwordkey);
+
 if (!$ret) {
   $authenticated = 31;
   return;
 }
 
 $identity = $ret['prefix'];
-$key = $ret['otp'];
+$key = htmlspecialchars($ret['otp']);
 
 # Check OTP
 $yubi = new Auth_Yubico($CFG['__CLIENT_ID__'], $CFG['__CLIENT_KEY__']);
@@ -67,7 +69,7 @@ $result = pg_query($query);
 if ($result) {
   $row = pg_fetch_row($result);
   if ($row[0]) {
-    $realname = $row[0];
+    $realname = htmlspecialchars($row[0]);
   }
  }
 

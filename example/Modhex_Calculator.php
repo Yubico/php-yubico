@@ -95,11 +95,11 @@ if (strlen($srctext) > 0) {
 				<b>Input string: </b><?php echo $srctext;?> (<?php echo $srcfmt_desc;?>)<br/><br>
 				<b>Output string</b> (in various formats):
 				<ul>
-					<li><?php echo $FMT_TEXT . ': ' . base64_decode($b64txt); ?></li>
-					<li><?php echo $FMT_DEC . ': ' . gmp_strval(gmp_init(b64ToHex($b64txt),16)); ?></li>
-					<li><?php echo $FMT_MODHEX . ' encoded: ' . b64ToModhex($b64txt); ?></li>
-					<li><?php echo $FMT_B64 . ' encoded: ' . $b64txt; ?></li>
-					<li><?php echo $FMT_HEX . ' encoded: ' . b64ToHex($b64txt); ?></li>
+					<li><?php echo $FMT_TEXT . ': ' . htmlspecialchars(base64_decode($b64txt)); ?></li>
+					<li><?php echo $FMT_DEC . ': ' . htmlspecialchars(gmp_strval(gmp_init(b64ToHex($b64txt),16))); ?></li>
+					<li><?php echo $FMT_MODHEX . ' encoded: ' . htmlspecialchars(b64ToModhex($b64txt)); ?></li>
+					<li><?php echo $FMT_B64 . ' encoded: ' . htmlspecialchars($b64txt); ?></li>
+					<li><?php echo $FMT_HEX . ' encoded: ' . htmlspecialchars(b64ToHex($b64txt)); ?></li>
 				</ul>
 			</fieldset>
 			<br>
@@ -123,7 +123,7 @@ if (strlen($srctext) > 0) {
 				        <input type="radio" name="srcfmt" value="M" <?php echo ($srcfmt_org == "M")?'checked':''; ?>>Modhex<br/><br/>
 
 					<b>String:</b>&nbsp;
-					<input name="srctext" id="srctext" value="<?php echo $srctext?>" size=50 maxlength=50><br/><br/>
+					<input name="srctext" id="srctext" value="<?php echo htmlspecialchars($srctext); ?>" size=50 maxlength=50><br/><br/>
 
 					<input type="submit" value="Convert to all formats">
 				</fieldset>

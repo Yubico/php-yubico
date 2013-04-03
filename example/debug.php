@@ -13,24 +13,24 @@
 	}
 	print "</td></tr>\n";
 	if ($passwordkey) {
-	    print "<tr><td width=70><b>passwordkey</b></td><td>$passwordkey</td></tr>\n";
+	    print "<tr><td width=70><b>passwordkey</b></td><td>".htmlspecialchars($passwordkey)."</td></tr>\n";
 	} else if ($key) {
-	    print "<tr><td width=70><b>key</b></td><td>$key</td></tr>\n";
+	    print "<tr><td width=70><b>key</b></td><td>".htmlspecialchars($key)."</td></tr>\n";
 	}
 	!$username or
-	 print "<tr><td width=70><b>username</b></td><td>$username</td></tr>\n";
+	 print "<tr><td width=70><b>username</b></td><td>".htmlspecialchars($username)."</td></tr>\n";
 	!$password or
-	 print "<tr><td width=70><b>password</b></td><td>$password</td></tr>\n";
+	 print "<tr><td width=70><b>password</b></td><td>".htmlspecialchars($password)."</td></tr>\n";
 	!$identity or
-	 print "<tr><td width=70><b>identity</b></td><td>$identity" .
+	 print "<tr><td width=70><b>identity</b></td><td>".htmlspecialchars($identity) .
                "&nbsp;&nbsp;&nbsp; <b>decimal&nbsp;&nbsp;</b>&nbsp;" .  base_convert(b64ToHex(modhexToB64($identity)),16,10) . 
 	       "</td></tr>\n";
 	!$realname or
-	 print "<tr><td width=70><b>db_realname</b></td><td>$realname</td></tr>\n";
+	 print "<tr><td width=70><b>db_realname</b></td><td>".htmlspecialchars($realname)."</td></tr>\n";
 	!$db_password or
-	 print "<tr><td width=70><b>db_password</b></td><td>$db_password</td></tr>\n";
+	 print "<tr><td width=70><b>db_password</b></td><td>".htmlspecialchars($db_password)."</td></tr>\n";
 	!$authenticated or
-	 print "<tr><td width=70><b>rc</b></td><td>$authenticated</td></tr>\n";
+	 print "<tr><td width=70><b>rc</b></td><td>".htmlspecialchars($authenticated)."</td></tr>\n";
 	print "<tr><td colspan=2>&nbsp;</td></tr>\n";
 	print "<tr><td colspan=2><b>Authentication Output</b></td></tr>\n";
 	if ($yubi) {

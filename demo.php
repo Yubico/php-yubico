@@ -33,15 +33,15 @@
 
    $ask_url = 0;
 
-   $url = $_REQUEST["url"];
-   $sl = $_REQUEST["sl"];
-   $timeout = $_REQUEST["timeout"];
-   $id = $_REQUEST["id"];
-   $key = $_REQUEST["key"];
-   $otp = $_REQUEST["otp"];
-   $https = $_REQUEST["https"];
-   $httpsverify = $_REQUEST["httpsverify"];
-   $wait_for_all = $_REQUEST["wait_for_all"];
+   $url = htmlspecialchars($_REQUEST["url"]);
+   $sl = htmlspecialchars($_REQUEST["sl"]);
+   $timeout = htmlspecialchars($_REQUEST["timeout"]);
+   $id = htmlspecialchars($_REQUEST["id"]);
+   $key = htmlspecialchars($_REQUEST["key"]);
+   $otp = htmlspecialchars($_REQUEST["otp"]);
+   $https = htmlspecialchars($_REQUEST["https"]);
+   $httpsverify = htmlspecialchars($_REQUEST["httpsverify"]);
+   $wait_for_all = htmlspecialchars($_REQUEST["wait_for_all"]);
 
    if ($ask_url == 0 || !$url) {
      $url = "api.yubico.com/wsapi/2.0/verify,api2.yubico.com/wsapi/2.0/verify,api3.yubico.com/wsapi/2.0/verify,api4.yubico.com/wsapi/2.0/verify,api5.yubico.com/wsapi/2.0/verify";
