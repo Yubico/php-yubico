@@ -39,7 +39,7 @@ follows:
  require_once 'Auth/Yubico.php';
  $otp = "ccbbddeertkrctjkkcglfndnlihhnvekchkcctif";
 
- # Generate a new id+key from https://api.yubico.com/get-api-key/
+ # Generate a new id+key from https://upgrade.yubico.com/getapikey/
  $yubi = new Auth_Yubico('42', 'FOOBAR=');
  $auth = $yubi->verify($otp);
  if (PEAR::isError($auth)) {
