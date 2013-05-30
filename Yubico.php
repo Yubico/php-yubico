@@ -337,7 +337,7 @@ class Auth_Yubico
 	      if ($timeout) curl_setopt($handle, CURLOPT_TIMEOUT, $timeout);
 	      curl_multi_add_handle($mh, $handle);
 	      
-	      $ch[$handle] = $handle;
+	      $ch[(int)$handle] = $handle;
 	    }
 
 	  /* Execute and read request. */
@@ -444,7 +444,7 @@ class Auth_Yubico
 		
 		curl_multi_remove_handle($mh, $info['handle']);
 		curl_close($info['handle']);
-		unset ($ch[$info['handle']]);
+		unset ($ch[(int)$info['handle']]);
 	      }
 	      curl_multi_select($mh);
 	    }
