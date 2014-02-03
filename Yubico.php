@@ -42,55 +42,49 @@ class Auth_Yubico
 	 * Yubico client ID
 	 * @var string
 	 */
-	var $_id;
+	private $_id;
 
 	/**
 	 * Yubico client key
 	 * @var string
 	 */
-	var $_key;
-
-	/**
-	 * URL part of validation server
-	 * @var string
-	 */
-	var $_url;
+	private $_key;
 
 	/**
 	 * List with URL part of validation servers
 	 * @var array
 	 */
-	var $_url_list;
+	private $_url_list;
 
 	/**
 	 * index to _url_list
 	 * @var int
 	 */
-	var $_url_index;
+	private $_url_index;
 
 	/**
 	 * Last query to server
 	 * @var string
 	 */
-	var $_lastquery;
+	private $_lastquery;
 
 	/**
 	 * Response from server
 	 * @var string
 	 */
-	var $_response;
+	private $_response;
 
 	/**
 	 * Flag whether to use https or not.
 	 * @var boolean
 	 */
-	var $_https;
+	private $_https;
 
 	/**
 	 * Flag whether to verify HTTPS server certificates or not.
 	 * @var boolean
 	 */
-	var $_httpsverify;
+	private $_httpsverify;
 
 	/**
 	 * Constructor
@@ -110,35 +104,33 @@ class Auth_Yubico
 		$this->_key = base64_decode($key);
 		$this->_https = $https;
 		$this->_httpsverify = $httpsverify;
-	}
+        $this->_url_list = array('api.yubico.com/wsapi/2.0/verify',
+                'api2.yubico.com/wsapi/2.0/verify',
+                'api3.yubico.com/wsapi/2.0/verify',
+                'api4.yubico.com/wsapi/2.0/verify',
+                'api5.yubico.com/wsapi/2.0/verify');	
+    }
 
-	/**
-	 * Specify to use a different URL part for verification.
-	 * The default is "api.yubico.com/wsapi/verify".
-	 *
-	 * @param  string $url  New server URL part to use
-	 * @access public
-	 */
-	function setURLpart($url)
-	{
-		$this->_url = $url;
-	}
+    /**
+     * Specify to use a different URL part list for verification.
+     * The default is "api[2-5]?.yubico.com/wsapi/2.0/verify".
+     *
+     * @param  array $url_list  New server URL part list to use
+     * @access public
+     */
+    function setURLpartList(array $url_list) {
+        $this->_url_list = $url_list;
+    }
 
-	/**
-	 * Get URL part to use for validation.
-	 *
-	 * @return string  Server URL part
-	 * @access public
-	 */
-	function getURLpart()
-	{
-		if ($this->_url) {
-			return $this->_url;
-		} else {
-			return "api.yubico.com/wsapi/verify";
-		}
-	}
-
+    /**
+     * Get URL part list to use for validation.
+     *
+     * @return string  Server URL part list
+     * @access public
+     */
+    function getURLpartList() {
+        return $this->_url_list;
+    }
 
 	/**
 	 * Get next URL part from list to use for validation.
@@ -148,15 +140,10 @@ class Auth_Yubico
 	 */
 	function getNextURLpart()
 	{
-	  if ($this->_url_list) $url_list=$this->_url_list;
-	  else $url_list=array('api.yubico.com/wsapi/2.0/verify',
-			       'api2.yubico.com/wsapi/2.0/verify', 
-			       'api3.yubico.com/wsapi/2.0/verify', 
-			       'api4.yubico.com/wsapi/2.0/verify',
-			       'api5.yubico.com/wsapi/2.0/verify');
-	  
-	  if ($this->_url_index>=count($url_list)) return false;
-	  else return $url_list[$this->_url_index++];
+        if ($this->_url_index >= count($this->_url_list))
+            return false;
+        else
+            return $this->_url_list[$this->_url_index++];
 	}
 
 	/**
