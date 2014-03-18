@@ -1,0 +1,7 @@
+Author: Yubico
+Basename: php-yubico
+Homepage: http://opensource.yubico.com/php-yubico/
+License: BSD-2-Clause
+Name: php-yubico
+Project: php-yubico
+Summary: PHP class for Yubico authentication
