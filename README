@@ -8,9 +8,9 @@ infrastructure.  Installation is simple using PEAR.
 
 The module is stable and is used in production.
 
-The development community is co-ordinated via Google Code:
+The development community is co-ordinated via Github:
 
-  http://code.google.com/p/php-yubico/
+  https://github.com/Yubico/php-yubico
 
 The project is licensed under a BSD license.  See the file COPYING for
 exact wording.  For any copyright year range specified as YYYY-ZZZZ in
@@ -56,7 +56,7 @@ follows:
 Provided in the package is also a script 'demo.php' that demonstrate
 how you may use the package.  The source code is available from:
 
-http://code.google.com/p/php-yubico/source/browse/trunk/demo.php
+https://github.com/Yubico/php-yubico/blob/master/demo.php
 
 To try the page, you may access it here:
 
@@ -67,7 +67,7 @@ two-factor mode.  It requires a database to store the username and
 passwords.  Database schema is in example/db.sql and configuration for
 the database needs to go into example/config.php.
 
-http://code.google.com/p/php-yubico/source/browse/trunk/example/
+https://github.com/Yubico/php-yubico/tree/master/example
 
 To try the page, you may access it here:
 
@@ -76,8 +76,8 @@ http://demo.yubico.com/php-yubico/
 Included is also a web page illustrating how to work with the modhex
 encoding.  The code is available here:
 
-http://code.google.com/p/php-yubico/source/browse/trunk/example/Modhex.php
-http://code.google.com/p/php-yubico/source/browse/trunk/example/Modhex_Calculator.php
+https://github.com/Yubico/php-yubico/blob/master/example/Modhex.php
+https://github.com/Yubico/php-yubico/blob/master/example/Modhex_Calculator.php
 
 It may be accessed here:
 
