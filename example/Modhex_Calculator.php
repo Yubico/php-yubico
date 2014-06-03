@@ -92,7 +92,7 @@ if (strlen($srctext) > 0) {
 ?>
 			<fieldset>
 				<legend><b>Result</b></legend>
-				<b>Input string: </b><?php echo $srctext;?> (<?php echo $srcfmt_desc;?>)<br/><br>
+				<b>Input string: </b><?php echo htmlspecialchars($srctext);?> (<?php echo $srcfmt_desc;?>)<br/><br>
 				<b>Output string</b> (in various formats):
 				<ul>
 					<li><?php echo $FMT_TEXT . ': ' . htmlspecialchars(base64_decode($b64txt)); ?></li>
