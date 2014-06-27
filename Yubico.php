@@ -281,6 +281,12 @@ class Auth_Yubico
 	function verify($token, $use_timestamp=null, $wait_for_all=False,
 			$sl=null, $timeout=null)
 	{
+	  if($this->_https) {
+	    if (!($version = curl_version()) || !($version['features'] & CURL_VERSION_SSL)) {
+	      return PEAR::raiseError('HTTPS requested while Curl not compiled with SSL');
+	    }
+	  }
+	  
 	  /* Construct parameters string */
 	  $ret = $this->parsePasswordOTP($token);
 	  if (!$ret) {
