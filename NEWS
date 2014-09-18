@@ -1,5 +1,7 @@
 * Version 2.5 unreleased
 
+  * For httpsverify=false, set CURLOPT_SSL_VERIFYHOST to 0.
+
   * Support US Dvorak keyboard layout.
 
   * Cosmetic fixes of examples.

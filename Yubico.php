@@ -5,7 +5,7 @@
    * @category    Auth
    * @package     Auth_Yubico
    * @author      Simon Josefsson <simon@yubico.com>, Olov Danielson <olov@yubico.com>
-   * @copyright   2007-2012 Yubico AB
+   * @copyright   2007-2012-2014 Yubico AB
    * @license     http://opensource.org/licenses/bsd-license.php New BSD License
    * @version     2.0
    * @link        http://www.yubico.com/
@@ -329,6 +329,7 @@ class Auth_Yubico
 	      curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
 	      if (!$this->_httpsverify) {
 		curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, 0);
 	      }
 	      curl_setopt($handle, CURLOPT_FAILONERROR, true);
 	      /* If timeout is set, we better apply it here as well
