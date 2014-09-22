@@ -218,8 +218,8 @@ class Auth_Yubico
 			  $str, $matches)) {
 	    /* Dvorak? */
 	    if (!preg_match("/^((.*)" . $delim . ")?" .
-			    "(([jxe.uidchtnbpygk]{0,16})" .
-			    "([jxe.uidchtnbpygk]{32}))$/i",
+			    "(([jxe\.uidchtnbpygk]{0,16})" .
+			    "([jxe\.uidchtnbpygk]{32}))$/i",
 			    $str, $matches)) {
 	      return false;
 	    } else {
