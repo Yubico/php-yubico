@@ -213,13 +213,13 @@ class Auth_Yubico
 	function parsePasswordOTP($str, $delim = '[:]')
 	{
 	  if (!preg_match("/^((.*)" . $delim . ")?" .
-			  "(([cbdefghijklnrtuvCBDEFGHIJKLNRTUV]{0,16})" .
-			  "([cbdefghijklnrtuvCBDEFGHIJKLNRTUV]{32}))$/",
+			  "(([cbdefghijklnrtuv]{0,16})" .
+			  "([cbdefghijklnrtuv]{32}))$/i",
 			  $str, $matches)) {
 	    /* Dvorak? */
 	    if (!preg_match("/^((.*)" . $delim . ")?" .
-			    "(([jxe.uidchtnbpygkJXE.UIDCHTNBPYGK]{0,16})" .
-			    "([jxe.uidchtnbpygkJXE.UIDCHTNBPYGK]{32}))$/",
+			    "(([jxe\.uidchtnbpygk]{0,16})" .
+			    "([jxe\.uidchtnbpygk]{32}))$/i",
 			    $str, $matches)) {
 	      return false;
 	    } else {
