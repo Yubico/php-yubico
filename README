@@ -1,10 +1,10 @@
-= !Auth_Yubico PHP class =
+== Auth_Yubico PHP class ==
 
 The Yubico authentication PHP class provides an easy way to integrate
 the Yubikey into your existing PHP-based user authentication
 infrastructure.  Installation is simple using PEAR.
 
-== Status and Roadmap ==
+=== Status and Roadmap ===
 
 The module is stable and is used in production.
 
@@ -17,7 +17,7 @@ exact wording.  For any copyright year range specified as YYYY-ZZZZ in
 this package note that the range specifies every single year in that
 closed interval.
 
-== Installation ==
+=== Installation ===
 
 Make sure your PHP installation supports curl, and that you have
 installed PEAR.  On Debian/Ubuntu systems:
@@ -29,11 +29,12 @@ Install the component by invoking:
   $ wget http://php-yubico.googlecode.com/files/Auth_Yubico-2.4.tgz
   $ pear install Auth_Yubico-2.4.tgz
 
-== Example usage ==
+=== Example usage ===
 
 The class is easy to use, in an HTML *.php file you invoke it as
 follows:
 
+[source, php]
 -----------
 <?php
  require_once 'Auth/Yubico.php';
@@ -51,9 +52,9 @@ follows:
 ?>
 -----------
 
-== Demo page ==
+=== Demo page ===
 
-Provided in the package is also a script 'demo.php' that demonstrate
+Provided in the package is also a script `demo.php` that demonstrate
 how you may use the package.  The source code is available from:
 
 https://github.com/Yubico/php-yubico/blob/master/demo.php
@@ -82,8 +83,3 @@ https://github.com/Yubico/php-yubico/blob/master/example/Modhex_Calculator.php
 It may be accessed here:
 
 http://demo.yubico.com/php-yubico/Modhex_Calculator.php
-
-== Feedback ==
-
-If you want to discuss anything related to the Yubico PHP class,
-please contact Simon Josefsson <simon@yubico.com>.
