@@ -4,18 +4,9 @@ The Yubico authentication PHP class provides an easy way to integrate
 the Yubikey into your existing PHP-based user authentication
 infrastructure.  Installation is simple using PEAR.
 
-=== Status and Roadmap ===
+The development community is co-ordinated via
+https://github.com/Yubico/php-yubico[the Github project].
 
-The module is stable and is used in production.
-
-The development community is co-ordinated via Github:
-
-  https://github.com/Yubico/php-yubico
-
-The project is licensed under a BSD license.  See the file COPYING for
-exact wording.  For any copyright year range specified as YYYY-ZZZZ in
-this package note that the range specifies every single year in that
-closed interval.
 
 === Installation ===
 
@@ -29,10 +20,11 @@ Install the component by invoking:
   $ wget http://php-yubico.googlecode.com/files/Auth_Yubico-2.4.tgz
   $ pear install Auth_Yubico-2.4.tgz
 
-=== Example usage ===
+=== Usage ===
 
-The class is easy to use, in an HTML *.php file you invoke it as
-follows:
+NOTE: Make sure that you have read https://developers.yubico.com/OTP/Libraries/Using_a_library.html[Using a YubiKey OTP library] before continuing.
+
+This is an example of how you can use the `Yubico.php` inside an HTML *.php file:
 
 [source, php]
 -----------
@@ -40,7 +32,7 @@ follows:
  require_once 'Auth/Yubico.php';
  $otp = "ccbbddeertkrctjkkcglfndnlihhnvekchkcctif";
 
- # Generate a new id+key from https://upgrade.yubico.com/getapikey/
+ # Generate a new id+key from https://upgrade.yubico.com/getapikey
  $yubi = new Auth_Yubico('42', 'FOOBAR=');
  $auth = $yubi->verify($otp);
  if (PEAR::isError($auth)) {
@@ -52,34 +44,32 @@ follows:
 ?>
 -----------
 
-=== Demo page ===
+==== API demo
 
-Provided in the package is also a script `demo.php` that demonstrate
-how you may use the package.  The source code is available from:
+Provided in the package is also a script 
+https://github.com/Yubico/php-yubico/blob/master/demo.php[demo.php]
+that demonstrates how you may use the package. The script is deployed 
+http://demo.yubico.com/php-yubico/demo.php[here].
 
-https://github.com/Yubico/php-yubico/blob/master/demo.php
-
-To try the page, you may access it here:
-
-http://demo.yubico.com/php-yubico/demo.php
-
-There is also a complete example site to demo one-factor and
+==== Example site
+There is also a complete example site that demonstrates one-factor and
 two-factor mode.  It requires a database to store the username and
-passwords.  Database schema is in example/db.sql and configuration for
-the database needs to go into example/config.php.
+passwords.  Database schema is in 
+https://github.com/Yubico/php-yubico/blob/master/example/db.sql[example/db.sql]
+and configuration for the database needs to go into
+https://github.com/Yubico/php-yubico/blob/master/example/config.php[example/config.php].
 
-https://github.com/Yubico/php-yubico/tree/master/example
+The example site is deployed http://demo.yubico.com/php-yubico[here].
 
-To try the page, you may access it here:
 
-http://demo.yubico.com/php-yubico/
+=== Modhex Calculator
+This package also includes
+https://github.com/Yubico/php-yubico/blob/master/example/Modhex_Calculator.php[Modhex_Calculator.php],
+a web page illustrating how to work with the modhex encoding. It is deployed 
+http://demo.yubico.com/php-yubico/Modhex_Calculator.php[here]
 
-Included is also a web page illustrating how to work with the modhex
-encoding.  The code is available here:
-
-https://github.com/Yubico/php-yubico/blob/master/example/Modhex.php
-https://github.com/Yubico/php-yubico/blob/master/example/Modhex_Calculator.php
-
-It may be accessed here:
-
-http://demo.yubico.com/php-yubico/Modhex_Calculator.php
+=== License
+The project is licensed under a BSD license.  See the file COPYING for
+exact wording.  For any copyright year range specified as YYYY-ZZZZ in
+this package note that the range specifies every single year in that
+closed interval.
