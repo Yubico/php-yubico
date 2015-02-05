@@ -1,15 +1,13 @@
 VERSION=2.5
 PACKAGE=Auth_Yubico
 CODE=COPYING NEWS README Yubico.php package.xml demo.php
-EXAMPLE=example/admin.php example/authenticate.php example/bg.jpg	\
-	example/config.php example/db.sql example/debug.php		\
-	example/greenBG.jpg example/greenGraphic.jpg			\
-	example/img_press.jpg example/index.html example/logo.jpg	\
-	example/Modhex_Calculator.php example/Modhex.php		\
-	example/one_factor.php example/style.css			\
+EXAMPLE=example/admin.php example/authenticate.php example/config.php	\
+	example/db.sql example/debug.php example/img_press.jpg		\
+	example/index.html example/Modhex_Calculator.php		\
+	example/Modhex.php example/one_factor.php example/style.css	\
 	example/two_factor_legacy.php example/two_factor.php		\
-	example/yubicoLogo.jpg						\
-	example/yubikey.jpg example/yubiright_16x16.gif
+	example/yubicoLogo.jpg example/yubikey.jpg			\
+	example/yubiright_16x16.gif
 
 all: sync-version $(PACKAGE)-$(VERSION).tgz
 
@@ -42,7 +40,7 @@ clean:
 PROJECT=php-yubico
 
 release:
-	@head -3 NEWS | grep -q "Version $(VERSION) .released `date -I`" || \
+	@head -3 NEWS | grep -q "Version $(VERSION) released `date -I`" || \
 		(echo 'error: update date/version in $(srcdir)/NEWS'; exit 1)
 	@if test ! -d "$(YUBICO_WWW_REPO)"; then \
 		echo "Yubico www repo not found!"; \
