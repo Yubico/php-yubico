@@ -1,4 +1,4 @@
-VERSION=2.4
+VERSION=2.5
 PACKAGE=Auth_Yubico
 CODE=COPYING NEWS README Yubico.php package.xml demo.php
 EXAMPLE=example/admin.php example/authenticate.php example/bg.jpg	\
@@ -42,25 +42,18 @@ clean:
 PROJECT=php-yubico
 
 release:
-	@if test -z "$(USER)" || test -z "$(KEYID)"; then \
-		echo "Try this instead:"; \
-		echo "  make release USER=[GOOGLEUSERNAME] KEYID=[PGPKEYID]"; \
-		echo "For example:"; \
-		echo "  make release USER=simon@yubico.com KEYID=2117364A"; \
+	@head -3 $(srcdir)/NEWS \
+		| grep -q "Version $(VERSION) .released `date -I`" || \
+		(echo 'error: update date/version in $(srcdir)/NEWS'; exit 1)
+	@if test ! -d "$(YUBICO_WWW_REPO)"; then \
+		echo "Yubico www repo not found!"; \
+		echo "Make sure that YUBICO_WWW_REPO is set"; \
 		exit 1; \
 	fi
 	make
-	gpg --detach-sign --default-key $(KEYID) $(PACKAGE)-$(VERSION).tgz
+	gpg --detach-sign $(PACKAGE)-$(VERSION).tgz
 	gpg --verify $(PACKAGE)-$(VERSION).tgz.sig
 	git push
-	git tag -u $(KEYID)! -m $(VERSION) $(PACKAGE)-$(VERSION)
+	git tag -m $(VERSION) $(PACKAGE)-$(VERSION)
 	git push --tags
-	mkdir -p ../releases/$(PACKAGE)/ && \
-		cp -v $(PACKAGE)-$(VERSION).tgz* ../releases/$(PACKAGE)/
-	googlecode_upload.py -s "OpenPGP signature for $(PACKAGE) $(VERSION)." \
-	 -p $(PROJECT) -u $(USER) $(PACKAGE)-$(VERSION).tgz.sig
-	googlecode_upload.py -s "Auth_Yubico $(VERSION)." \
-	 -p $(PROJECT) -u $(USER) $(PACKAGE)-$(VERSION).tgz 
-	cp README ../wiki-$(PROJECT)/ReadMe.wiki && \
-		cd ../wiki-$(PROJECT) && \
-		svn commit -m Sync. ReadMe.wiki
+	$(YUBICO_WWW_REPO)/publish $(PROJECT) $(VERSION) $(PACKAGE)-$(VERSION).tgz*
