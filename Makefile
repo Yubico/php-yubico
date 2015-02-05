@@ -42,8 +42,7 @@ clean:
 PROJECT=php-yubico
 
 release:
-	@head -3 $(srcdir)/NEWS \
-		| grep -q "Version $(VERSION) .released `date -I`" || \
+	@head -3 NEWS | grep -q "Version $(VERSION) .released `date -I`" || \
 		(echo 'error: update date/version in $(srcdir)/NEWS'; exit 1)
 	@if test ! -d "$(YUBICO_WWW_REPO)"; then \
 		echo "Yubico www repo not found!"; \
