@@ -18,7 +18,7 @@ $FMT_OTP = 'OTP';
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
-	<title>Modehex Calculator</title>
+	<title>Modhex Calculator</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<style type="text/css">
 		input[type="radio"] {
