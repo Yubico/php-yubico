@@ -104,7 +104,7 @@ class Auth_Yubico
 	 *                                 default true)
 	 * @access public
 	 */
-	function Auth_Yubico($id, $key = '', $https = 0, $httpsverify = 1)
+	public function __construct($id, $key = '', $https = 0, $httpsverify = 1)
 	{
 		$this->_id =  $id;
 		$this->_key = base64_decode($key);
