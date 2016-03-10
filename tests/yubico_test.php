@@ -8,6 +8,7 @@ class YubicoTest extends \PHPUnit_Framework_TestCase {
 
   public function setUp() {
     $this->yubi = new Auth_Yubico(27655, '9Tt8Gg51VG/dthDKgopt0n8IXVI=');
+    error_reporting(E_WARNING);
   }
 
   public function testVerify() {
