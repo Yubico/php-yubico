@@ -81,12 +81,6 @@ class Auth_Yubico
 	var $_response;
 
 	/**
-	 * Flag whether to use https or not.
-	 * @var boolean
-	 */
-	var $_https;
-
-	/**
 	 * Flag whether to verify HTTPS server certificates or not.
 	 * @var boolean
 	 */
@@ -98,7 +92,7 @@ class Auth_Yubico
 	 * Sets up the object
 	 * @param    string  $id     The client identity
 	 * @param    string  $key    The client MAC key (optional)
-	 * @param    boolean $https  Flag whether to use https (optional)
+	 * @param    boolean $https  noop
 	 * @param    boolean $httpsverify  Flag whether to use verify HTTPS
 	 *                                 server certificates (optional,
 	 *                                 default true)
@@ -108,7 +102,6 @@ class Auth_Yubico
 	{
 		$this->_id =  $id;
 		$this->_key = base64_decode($key);
-		$this->_https = $https;
 		$this->_httpsverify = $httpsverify;
 	}
 
@@ -313,13 +306,7 @@ class Auth_Yubico
 	  $ch = array();
 	  while($URLpart=$this->getNextURLpart()) 
 	    {
-	      /* Support https. */
-	      if ($this->_https) {
-		$query = "https://";
-	      } else {
-		$query = "http://";
-	      }
-	      $query .= $URLpart . "?" . $parameters;
+	      $query = "https://" . $URLpart . "?" . $parameters;
 
 	      if ($this->_lastquery) { $this->_lastquery .= " "; }
 	      $this->_lastquery .= $query;
