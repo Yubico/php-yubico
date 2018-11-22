@@ -118,22 +118,6 @@ class Auth_Yubico
 	}
 
 	/**
-	 * Get URL part to use for validation.
-	 *
-	 * @return string  Server URL part
-	 * @access public
-	 */
-	function getURLpart()
-	{
-		if ($this->_url) {
-			return $this->_url;
-		} else {
-			return "api.yubico.com/wsapi/verify";
-		}
-	}
-
-
-	/**
 	 * Get next URL part from list to use for validation.
 	 *
 	 * @return mixed string with URL part of false if no more URLs in list
