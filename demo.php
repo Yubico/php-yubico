@@ -9,11 +9,8 @@
   <p>For more information, please use the following resources:
 
    <ul>
-     <li><a href="http://opensource.yubico.com/php-yubico/">
+     <li><a href="https://developers.yubico.com/php-yubico/">
          Homepage of php-yubico</a>
-
-     <li><a href="http://www.yubico.com/develop/open-source-software/web-api-clients/">
-         Yubico YubiCloud web-api pages</a>
 
      <li><a href="https://upgrade.yubico.com/getapikey/">
          Yubico API Key Generator</a>
