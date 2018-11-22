@@ -358,7 +358,7 @@ class Auth_Yubico
 		    /* Case 2. Verify signature first */
 		    $rows = explode("\r\n", trim($str));
 		    $response=array();
-		    while (list($key, $val) = each($rows)) {
+			foreach ($rows as $key => $val) {
 		      /* = is also used in BASE64 encoding so we only replace the first = by # which is not used in BASE64 */
 		      $val = preg_replace('/=/', '#', $val, 1);
 		      $row = explode("#", $val);
