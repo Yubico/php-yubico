@@ -49,7 +49,7 @@ This is an example of how you can use the `Yubico.php` inside an HTML *.php file
 Provided in the package is also a script 
 https://github.com/Yubico/php-yubico/blob/master/demo.php[demo.php]
 that demonstrates how you may use the package. The script is deployed 
-http://demo.yubico.com/php-yubico/demo.php[here].
+https://demo.yubico.com/php-yubico/demo.php[here].
 
 ==== Example site
 There is also a complete example site that demonstrates one-factor and
@@ -59,14 +59,14 @@ https://github.com/Yubico/php-yubico/blob/master/example/db.sql[example/db.sql]
 and configuration for the database needs to go into
 https://github.com/Yubico/php-yubico/blob/master/example/config.php[example/config.php].
 
-The example site is deployed http://demo.yubico.com/php-yubico[here].
+The example site is deployed https://demo.yubico.com/php-yubico[here].
 
 
 === Modhex Calculator
 This package also includes
 https://github.com/Yubico/php-yubico/blob/master/example/Modhex_Calculator.php[Modhex_Calculator.php],
 a web page illustrating how to work with the modhex encoding. It is deployed 
-http://demo.yubico.com/php-yubico/Modhex_Calculator.php[here]
+https://demo.yubico.com/php-yubico/Modhex_Calculator.php[here]
 
 === License
 The project is licensed under a BSD license.  See the file COPYING for

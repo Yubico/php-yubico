@@ -6,9 +6,9 @@
    * @package     Auth_Yubico
    * @author      Simon Josefsson <simon@yubico.com>, Olov Danielson <olov@yubico.com>
    * @copyright   2007-2015 Yubico AB
-   * @license     http://opensource.org/licenses/bsd-license.php New BSD License
+   * @license     https://opensource.org/licenses/bsd-license.php New BSD License
    * @version     2.0
-   * @link        http://www.yubico.com/
+   * @link        https://www.yubico.com/
    */
 
 require_once 'PEAR.php';
