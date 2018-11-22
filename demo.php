@@ -36,7 +36,6 @@
    $id = htmlspecialchars($_REQUEST["id"]);
    $key = htmlspecialchars($_REQUEST["key"]);
    $otp = htmlspecialchars($_REQUEST["otp"]);
-   $https = htmlspecialchars($_REQUEST["https"]);
    $httpsverify = htmlspecialchars($_REQUEST["httpsverify"]);
    $wait_for_all = htmlspecialchars($_REQUEST["wait_for_all"]);
 
@@ -76,11 +75,6 @@
    </tr>
 
    <tr>
-     <td><b>Use HTTPS:</b></td>
-     <td><input type=checkbox name=https value=1 <?php if ($https) { print "checked"; } ?>></td>
-   </tr>
-
-   <tr>
      <td><b>Disable certificate verification:</b></td>
      <td><input type=checkbox name=httpsverify value=1 <?php if ($httpsverify) { print "checked"; } ?>></td>
    </tr>
@@ -105,7 +99,7 @@
 
 <?php
    require_once 'Auth/Yubico.php';
-   $yubi = new Auth_Yubico($id, $key, $https, $httpsverify);
+   $yubi = new Auth_Yubico($id, $key, NULL, $httpsverify);
    if ($ask_url) {
       $urls=explode(",", $url);
       foreach($urls as $u) $yubi->addURLpart($u);
