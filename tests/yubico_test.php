@@ -3,7 +3,7 @@
 require_once(__DIR__ . '/../Yubico.php');
 
 
-class YubicoTest extends \PHPUnit_Framework_TestCase {
+class YubicoTest extends \PHPUnit\Framework\TestCase {
   private $yubi;
 
   public function setUp() {
@@ -23,5 +23,3 @@ class YubicoTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($ret, 'NO_VALID_ANSWER');
   }
 }
-
-?>
