@@ -1,0 +1,13 @@
+{
+    "name": "yubico/client",
+    "description": "Yubico Client",
+    "type": "library",
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "Yubico",
+            "email": "team@yubico.com"
+        }
+    ],
+    "require": {}
+}
