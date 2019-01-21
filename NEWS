@@ -1,3 +1,7 @@
+* Version 2.6 released 2019-01-21
+ ** Compat changes for PHP 7.
+ ** Make https mandatory.
+
 * Version 2.5 released 2015-02-05
  ** For httpsverify=false, set CURLOPT_SSL_VERIFYHOST to 0.
  ** Support US Dvorak keyboard layout.
