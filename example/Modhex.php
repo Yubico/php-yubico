@@ -35,15 +35,15 @@ class ModHex {
 		$decoded = "";				// decoded string to be returned
 		
 		// strings must have an even length
-		if ( $tokLen % 2 != 0 ) { return FALSE; }
+		if ( $tokLen % 2 != 0 ) { return false; }
 		
 		for ($i = 0; $i < $tokLen; $i=$i+2 ) {
 			$high = strpos(ModHex::$TRANSKEY, $token[$i]);
 			$low = strpos(ModHex::$TRANSKEY, $token[$i+1]);
 
 			// if there's an invalid character in the encoded $token, fail here.
-			if ( $high === FALSE || $low === FALSE ) 
-				return FALSE;
+			if ( $high === false || $low === false ) 
+				return false;
 
 			$decoded .= chr(($high << 4) | $low);
 		}

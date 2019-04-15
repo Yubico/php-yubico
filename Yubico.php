@@ -255,7 +255,7 @@ class Auth_Yubico
 	 * @return mixed               PEAR error on error, true otherwise
 	 * @access public
 	 */
-	function verify($token, $use_timestamp=null, $wait_for_all=False,
+	function verify($token, $use_timestamp=null, $wait_for_all=false,
 			$sl=null, $timeout=null)
 	{
 	  /* Construct parameters string */
@@ -314,8 +314,8 @@ class Auth_Yubico
 
 	  /* Execute and read request. */
 	  $this->_response=null;
-	  $replay=False;
-	  $valid=False;
+	  $replay=false;
+	  $valid=false;
 	  do {
 	    /* Let curl do its work. */
 	    while (($mrc = curl_multi_exec($mh, $active))
@@ -367,7 +367,7 @@ class Auth_Yubico
 		    
 		    $parameters=array('nonce','otp', 'sessioncounter', 'sessionuse', 'sl', 'status', 't', 'timeout', 'timestamp');
 		    sort($parameters);
-		    $check=Null;
+		    $check=null;
 		    foreach ($parameters as $param) {
 		      if (array_key_exists($param, $response)) {
 			if ($check) $check = $check . '&';
@@ -382,22 +382,22 @@ class Auth_Yubico
 		    if($response['h'] == $checksignature) {
 		      if ($status == 'REPLAYED_OTP') {
 			if (!$wait_for_all) { $this->_response = $str; }
-			$replay=True;
+			$replay=true;
 		      } 
 		      if ($status == 'OK') {
 			if (!$wait_for_all) { $this->_response = $str; }
-			$valid=True;
+			$valid=true;
 		      }
 		    }
 		  } else {
 		    /* Case 3. We check the status directly */
 		    if ($status == 'REPLAYED_OTP') {
 		      if (!$wait_for_all) { $this->_response = $str; }
-		      $replay=True;
+		      $replay=true;
 		    } 
 		    if ($status == 'OK') {
 		      if (!$wait_for_all) { $this->_response = $str; }
-		      $valid=True;
+		      $valid=true;
 		    }
 		  }
 		}

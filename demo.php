@@ -99,7 +99,7 @@
 
 <?php
    require_once 'Auth/Yubico.php';
-   $yubi = new Auth_Yubico($id, $key, NULL, $httpsverify);
+   $yubi = new Auth_Yubico($id, $key, null, $httpsverify);
    if ($ask_url) {
       $urls=explode(",", $url);
       foreach($urls as $u) $yubi->addURLpart($u);
