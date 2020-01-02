@@ -51,12 +51,6 @@ class Auth_Yubico
 	var $_key;
 
 	/**
-	 * URL part of validation server
-	 * @var string
-	 */
-	var $_url;
-
-	/**
 	 * List with URL part of validation servers
 	 * @var array
 	 */
@@ -107,14 +101,15 @@ class Auth_Yubico
 
 	/**
 	 * Specify to use a different URL part for verification.
-	 * The default is "api.yubico.com/wsapi/verify".
+	 * The default is "https://api.yubico.com/wsapi/2.0/verify".
 	 *
 	 * @param  string $url  New server URL part to use
 	 * @access public
+	 * @deprecated
 	 */
 	function setURLpart($url)
 	{
-		$this->_url = $url;
+	  $this->_url_list = array($url);
 	}
 
 	/**
