@@ -1,5 +1,6 @@
 <phpunit
-  colors="true">
+    colors="true"
+    bootstrap="tests/bootstrap.php">
   <testsuite name="tests">
     <directory suffix="test.php">.</directory>
   </testsuite>
