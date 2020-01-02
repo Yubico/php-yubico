@@ -5,7 +5,7 @@
    * @category    Auth
    * @package     Auth_Yubico
    * @author      Simon Josefsson <simon@yubico.com>, Olov Danielson <olov@yubico.com>
-   * @copyright   2007-2015 Yubico AB
+   * @copyright   2007-2020 Yubico AB
    * @license     https://opensource.org/licenses/bsd-license.php New BSD License
    * @version     2.0
    * @link        https://www.yubico.com/

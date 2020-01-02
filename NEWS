@@ -1,3 +1,7 @@
+* Version 2.7 released 2020-02-??
+ ** Default to just api.yubico.com (now load balanced)
+ ** Retry transient errors
+
 * Version 2.6 released 2019-01-21
  ** Compat changes for PHP 7.
  ** Make https mandatory.
