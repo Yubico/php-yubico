@@ -120,7 +120,7 @@ class Auth_Yubico
 	/**
 	 * Get next URL part from list to use for validation.
 	 *
-	 * @return mixed string with URL part of false if no more URLs in list
+	 * @return mixed string with URL part or false if no more URLs in list
 	 * @access public
 	 */
 	function getNextURLpart()
