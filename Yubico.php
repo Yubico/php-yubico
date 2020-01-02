@@ -453,10 +453,6 @@ class Auth_Yubico
 		    if ($valid) return true;
 		    return PEAR::raiseError($status);
 		  }
-		
-		curl_multi_remove_handle($mh, $info['handle']);
-		curl_close($info['handle']);
-		unset ($ch[(int)$info['handle']]);
 	      } else {
 		/* Some kind of error, but def. not a 200 response */
 		/* No status= in response body */
@@ -481,10 +477,11 @@ class Auth_Yubico
 		    $active = true;
 		  }
 		}
-		curl_multi_remove_handle($mh, $info['handle']);
-		curl_close($info['handle']);
-		unset ($ch[(int)$info['handle']]);
 	      }
+	      /* Done with this handle */
+	      curl_multi_remove_handle($mh, $info['handle']);
+	      curl_close($info['handle']);
+	      unset ($ch[(int)$info['handle']]);
 	    }
 	  } while ($active);
 
