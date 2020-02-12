@@ -7,7 +7,7 @@ php:
   - 7.3
   - 7.4
 after_success:
-  - test -z $COVERALLS || (composer require satooshi/php-coveralls && vendor/bin/coveralls -v)
+  - test -z $COVERALLS || (composer require php-coveralls/php-coveralls && vendor/bin/coveralls -v)
 matrix:
   include:
     - php: 7.2
