@@ -17,8 +17,8 @@ installed PEAR.  On Debian/Ubuntu systems:
 
 Install the component by invoking:
 
-  $ wget https://developers.yubico.com/php-yubico/Releases/Auth_Yubico-2.6.tgz
-  $ pear install Auth_Yubico-2.6.tgz
+  $ wget https://developers.yubico.com/php-yubico/Releases/Auth_Yubico-latest.tgz
+  $ pear install Auth_Yubico-2.7.tgz
 
 === Usage ===
 

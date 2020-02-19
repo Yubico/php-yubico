@@ -40,7 +40,7 @@
    $wait_for_all = htmlspecialchars($_REQUEST["wait_for_all"]);
 
    if ($ask_url == 0 || !$url) {
-     $url = "api.yubico.com/wsapi/2.0/verify,api2.yubico.com/wsapi/2.0/verify,api3.yubico.com/wsapi/2.0/verify,api4.yubico.com/wsapi/2.0/verify,api5.yubico.com/wsapi/2.0/verify";
+     $url = "api.yubico.com/wsapi/2.0/verify";
     }
    if (!$id || !$otp) { $key = "oBVbNt7IZehZGR99rvq8d6RZ1DM="; }
    if (!$id) { $id = "1851"; }
