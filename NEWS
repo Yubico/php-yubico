@@ -1,4 +1,4 @@
-* Version 2.7 released 2020-02-??
+* Version 2.7 unreleased
  ** Default to just api.yubico.com (now load balanced)
  ** Retry transient errors
  ** No longer support PHP 5.6 or HHVM (EOL 2018-12-31)
