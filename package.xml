@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD</license>
   <notes>
+    PHP class to help you verify Yubico OTP tokens.
   </notes>
   <contents>
     <dir name="/">
