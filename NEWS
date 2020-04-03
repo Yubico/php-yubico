@@ -1,3 +1,5 @@
+* Version 2.8 unreleased
+
 * Version 2.7 released 2020-04-03
  ** Default to just api.yubico.com (now load balanced)
  ** Retry transient errors
