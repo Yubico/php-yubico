@@ -1,5 +1,7 @@
 == Auth_Yubico PHP class ==
 
+NOTE: This project is deprecated and is no longer being maintained. For more information and guidance on how to implement Yubico OTP support in applications, see https://status.yubico.com/2021/04/15/one-api-yubico-com-one-http-get/.
+
 The Yubico authentication PHP class provides an easy way to integrate
 the Yubikey into your existing PHP-based user authentication
 infrastructure.  Installation is simple using PEAR.
